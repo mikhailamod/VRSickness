@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GateObstacle : Obstacle
+public class CartObstacle : Obstacle
 {
-
     public Animator animator;
-
 
     protected override void Start()
     {
@@ -16,6 +14,6 @@ public class GateObstacle : Obstacle
 
     protected override void Trigger()
     {
-        animator.SetBool("OpenGate", true);
+        animator.SetBool("MoveCart", true);
     }
 }
