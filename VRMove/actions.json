@@ -41,6 +41,11 @@
       "requirement": "optional"
     },
     {
+      "name": "/actions/default/in/Walk",
+      "type": "vector1",
+      "requirement": "mandatory"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
@@ -128,6 +133,10 @@
     {
       "controller_type": "vive_tracker_camera",
       "binding_url": "binding_vive_tracker_camera.json"
+    },
+    {
+      "controller_type": "gamepad",
+      "binding_url": "application_generated_unity_vrmove_exe_binding_gamepad.json"
     }
   ],
   "localization": [

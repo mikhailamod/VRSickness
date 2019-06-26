@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.vrmove.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\Mikhail\\Documents\\VRSickness\\VRMove\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "VRMove [Testing]"
+        }
+      }
+    }
+  ]
+}

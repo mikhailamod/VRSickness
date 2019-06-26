@@ -1,0 +1,26 @@
+{
+   "action_manifest_version" : 0,
+   "alias_info" : {},
+   "app_key" : "application.generated.unity.vrmove.exe",
+   "bindings" : {
+      "/actions/default" : {
+         "sources" : [
+            {
+               "inputs" : {
+                  "pull" : {
+                     "output" : "/actions/default/in/walk"
+                  }
+               },
+               "mode" : "trigger",
+               "path" : "/user/gamepad/input/trigger_right"
+            }
+         ]
+      }
+   },
+   "category" : "steamvr_input",
+   "controller_type" : "gamepad",
+   "description" : "",
+   "name" : "My VRMove [Testing] configuration for Gamepad",
+   "options" : {},
+   "simulated_actions" : []
+}

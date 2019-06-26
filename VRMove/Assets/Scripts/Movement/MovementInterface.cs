@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class MovementInterface : MonoBehaviour
@@ -8,10 +9,14 @@ public class MovementInterface : MonoBehaviour
     [Header("General Settings")]
     public MovementState state;
     public PlayerMovement playerMovement;
+
     [Header("Keyboard Settings")]
     public KeyboardSettings keyboardSettings;
+
     [Header("Controller Settings")]
+    public SteamVR_Action_Single walkAction;
     public ControllerSettings controllerSettings;
+
     [Header("Stepper Settings")]
     public StepperSettings stepperSettings;
     [Header("Tether Settings")]
@@ -56,7 +61,12 @@ public class MovementInterface : MonoBehaviour
 
     void ManageController()
     {
-        // @TODO Brandon
+        
+        if(SteamVR_Actions._default.Walk.GetAxis(SteamVR_Input_Sources.Any) != 0)
+        {
+            float amount = walkAction.GetAxis(SteamVR_Input_Sources.Any) * controllerSettings.speed;
+            playerMovement.Move(amount * Time.deltaTime);
+        }
     }
 
     void ManageStepper()
@@ -95,7 +105,7 @@ public class KeyboardSettings
 [System.Serializable]
 public class ControllerSettings
 {
-    // @TODO Brandon
+    public float speed;
 }
 
 [System.Serializable]

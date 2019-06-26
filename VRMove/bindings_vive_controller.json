@@ -1,5 +1,7 @@
 {
-   "app_key" : "application.generated.unity.steamvr.exe",
+   "action_manifest_version" : 0,
+   "alias_info" : {},
+   "app_key" : "application.generated.unity.vrmove.exe",
    "bindings" : {
       "/actions/buggy" : {
          "sources" : [
@@ -192,7 +194,7 @@
             {
                "inputs" : {
                   "pull" : {
-                     "output" : "/actions/default/in/squeeze"
+                     "output" : "/actions/default/in/walk"
                   }
                },
                "mode" : "trigger",
@@ -201,7 +203,7 @@
             {
                "inputs" : {
                   "pull" : {
-                     "output" : "/actions/default/in/squeeze"
+                     "output" : "/actions/default/in/walk"
                   }
                },
                "mode" : "trigger",
@@ -250,7 +252,10 @@
          ]
       }
    },
+   "category" : "steamvr_input",
    "controller_type" : "vive_controller",
    "description" : "",
-   "name" : "vive_controller"
+   "name" : "My VRMove [Testing] configuration for Vive Controller",
+   "options" : {},
+   "simulated_actions" : []
 }
