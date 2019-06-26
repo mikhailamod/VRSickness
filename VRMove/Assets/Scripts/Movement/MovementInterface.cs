@@ -49,6 +49,17 @@ public class MovementInterface : MonoBehaviour
                 ManageTether();
                 break;
         }
+
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("Controller now");
+            state = MovementState.CONTROLLER;
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log("Keyboard now");
+            state = MovementState.KEYBOARD;
+        }
     }
 
     void ManageKeyboard()
@@ -62,8 +73,9 @@ public class MovementInterface : MonoBehaviour
     void ManageController()
     {
         
-        if(SteamVR_Actions._default.Walk.GetAxis(SteamVR_Input_Sources.Any) != 0)
+        if(walkAction.GetAxis(SteamVR_Input_Sources.Any) != 0)
         {
+            Debug.Log("Triggered!");
             float amount = walkAction.GetAxis(SteamVR_Input_Sources.Any) * controllerSettings.speed;
             playerMovement.Move(amount * Time.deltaTime);
         }
@@ -105,7 +117,7 @@ public class KeyboardSettings
 [System.Serializable]
 public class ControllerSettings
 {
-    public float speed;
+    public float speed = 5f;
 }
 
 [System.Serializable]
