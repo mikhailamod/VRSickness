@@ -19,6 +19,10 @@ public class MovementInterface : MonoBehaviour
 
     [Header("Stepper Settings")]
     public StepperSettings stepperSettings;
+    public Transform tracker;
+    public float prev_y;
+    public float trackerOrigin;
+
     [Header("Tether Settings")]
     public TetherSettings tehterSettings;
 
@@ -29,6 +33,7 @@ public class MovementInterface : MonoBehaviour
         {
             playerMovement = GetComponent<PlayerMovement>();
         }
+        prev_y = 0f;
     }
 
     // Update is called once per frame
@@ -71,7 +76,11 @@ public class MovementInterface : MonoBehaviour
 
     void ManageStepper()
     {
-        // @TODO Mikhail
+        float current_y = tracker.position.y;
+        float amount = stepperSettings.speed * Mathf.Abs(current_y - prev_y);
+        prev_y = current_y;
+        playerMovement.Move(amount * Time.deltaTime);        
+
     }
 
     void ManageTether()
@@ -111,7 +120,7 @@ public class ControllerSettings
 [System.Serializable]
 public class StepperSettings
 {
-    // @TODO Mikhail
+    public float speed;
 }
 
 [System.Serializable]
