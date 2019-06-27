@@ -25,45 +25,47 @@ public class MovementInterface : MonoBehaviour
     [Header("Tether Settings")]
     public TetherSettings tetherSettings;
 
-    void OnTriggerEnter(Collider other)
+    public void enterTag(Collider other)
     {
         if (other.gameObject.CompareTag("Thresh1"))
         {
             tetherSettings.move = true;
             tetherSettings.speed = tetherSettings.speed_1;
-        }else if (other.gameObject.CompareTag("Thresh2"))
+        }
+        else if (other.gameObject.CompareTag("Thresh2"))
         {
             tetherSettings.speed = tetherSettings.speed_2;
-        }else if (other.gameObject.CompareTag("Thresh3"))
+        }
+        else if (other.gameObject.CompareTag("Thresh3"))
         {
             tetherSettings.speed = tetherSettings.speed_3;
         }
     }
 
-    void OnTriggerExit(Collider other)
+    public void exitTag(Collider other)
     {
         if (other.gameObject.CompareTag("Thresh1"))
         {
-            if (tetherSettings.HMD.transform.position.z < other.transform.position.z){
-            tetherSettings.move = false;
-
-            }
-    }
-            if (other.gameObject.CompareTag("Thresh2"))
-        {
-            if (tetherSettings.HMD.transform.position.z < other.transform.position.z){
-            tetherSettings.speed= tetherSettings.speed_1;
-
+            if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
+            {
+                tetherSettings.move = false;
             }
         }
-                    if (other.gameObject.CompareTag("Thresh3"))
+        if (other.gameObject.CompareTag("Thresh2"))
         {
-            if (tetherSettings.HMD.transform.position.z < other.transform.position.z){
-            tetherSettings.speed= tetherSettings.speed_2;
-
+            if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
+            {
+                tetherSettings.speed= tetherSettings.speed_1;
             }
-    }
         }
+        if (other.gameObject.CompareTag("Thresh3"))
+        {
+            if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
+            {
+                tetherSettings.speed= tetherSettings.speed_2;
+            }
+        }
+    }
 
 
     void Start()
