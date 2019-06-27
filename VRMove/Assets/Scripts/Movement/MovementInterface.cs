@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
+using TMPro;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class MovementInterface : MonoBehaviour
@@ -9,6 +10,7 @@ public class MovementInterface : MonoBehaviour
     [Header("General Settings")]
     public MovementState state;
     public PlayerMovement playerMovement;
+    public TextMeshProUGUI interactText;
 
     [Header("Keyboard Settings")]
     public KeyboardSettings keyboardSettings;
@@ -42,15 +44,18 @@ public class MovementInterface : MonoBehaviour
         {
             case MovementState.KEYBOARD:
                 ManageKeyboard();
+                ChangeText("Press E");
                 break;
             case MovementState.CONTROLLER:
                 ManageController();
+                ChangeText("Press X");
                 break;
             case MovementState.STEPPER:
                 ManageStepper();
+                ChangeText("Press touchpad");
                 break;
             case MovementState.TETHER:
-                ManageTether();
+                ChangeText("Press touchpad");
                 break;
         }
 
@@ -64,6 +69,21 @@ public class MovementInterface : MonoBehaviour
             Debug.Log("Keyboard now");
             state = MovementState.KEYBOARD;
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("Tether now");
+            state = MovementState.TETHER;
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log("Stepper now");
+            state = MovementState.STEPPER;
+        }
+    }
+
+    void ChangeText(string text)
+    {
+        interactText.text = text + " to interact";
     }
 
     void ManageKeyboard()
