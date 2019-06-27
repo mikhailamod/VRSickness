@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Thresh2
+  - Thresh1
+  - Thresh3
   layers:
   - Default
   - TransparentFX

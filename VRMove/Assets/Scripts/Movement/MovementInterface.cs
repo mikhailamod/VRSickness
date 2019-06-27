@@ -23,7 +23,47 @@ public class MovementInterface : MonoBehaviour
     float prev_y = 0;
 
     [Header("Tether Settings")]
-    public TetherSettings tehterSettings;
+    public TetherSettings tetherSettings;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Thresh1"))
+        {
+            tetherSettings.move = true;
+            tetherSettings.speed = tetherSettings.speed_1;
+        }else if (other.gameObject.CompareTag("Thresh2"))
+        {
+            tetherSettings.speed = tetherSettings.speed_2;
+        }else if (other.gameObject.CompareTag("Thresh3"))
+        {
+            tetherSettings.speed = tetherSettings.speed_3;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Thresh1"))
+        {
+            if (tetherSettings.HMD.transform.position.z < other.transform.position.z){
+            tetherSettings.move = false;
+
+            }
+    }
+            if (other.gameObject.CompareTag("Thresh2"))
+        {
+            if (tetherSettings.HMD.transform.position.z < other.transform.position.z){
+            tetherSettings.speed= tetherSettings.speed_1;
+
+            }
+        }
+                    if (other.gameObject.CompareTag("Thresh3"))
+        {
+            if (tetherSettings.HMD.transform.position.z < other.transform.position.z){
+            tetherSettings.speed= tetherSettings.speed_2;
+
+            }
+    }
+        }
 
 
     void Start()
@@ -53,6 +93,17 @@ public class MovementInterface : MonoBehaviour
                 ManageTether();
                 break;
         }
+
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("Controller now");
+            state = MovementState.CONTROLLER;
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log("Keyboard now");
+            state = MovementState.KEYBOARD;
+        }
     }
 
     void ManageKeyboard()
@@ -66,8 +117,9 @@ public class MovementInterface : MonoBehaviour
     void ManageController()
     {
         
-        if(SteamVR_Actions._default.Walk.GetAxis(SteamVR_Input_Sources.Any) != 0)
+        if(walkAction.GetAxis(SteamVR_Input_Sources.Any) != 0)
         {
+            Debug.Log("Triggered!");
             float amount = walkAction.GetAxis(SteamVR_Input_Sources.Any) * controllerSettings.speed;
             playerMovement.Move(amount * Time.deltaTime);
         }
@@ -84,8 +136,26 @@ public class MovementInterface : MonoBehaviour
 
     void ManageTether()
     {
+        
         // @TODO Jethro
+        
+        if(Input.GetKey(tetherSettings.movementKeyForward))
+        {
+        tetherSettings.HMD.transform.position += new Vector3(0, 0, ( keyboardSettings.speed* Time.deltaTime));
+        }
+        if(Input.GetKey(tetherSettings.movementKeyBackward))
+        {
+        tetherSettings.HMD.transform.position -= new Vector3(0, 0, ( keyboardSettings.speed* Time.deltaTime));
+        }
+
+        if(tetherSettings.move == true)
+        {
+            playerMovement.Move( tetherSettings.getSpeed()* Time.deltaTime);
+        }
     }
+
+
+    
 
 }
 
@@ -113,7 +183,7 @@ public class KeyboardSettings
 [System.Serializable]
 public class ControllerSettings
 {
-    public float speed;
+    public float speed = 5f;
 }
 
 [System.Serializable]
@@ -125,7 +195,36 @@ public class StepperSettings
 [System.Serializable]
 public class TetherSettings
 {
+
     // @TODO Jethro
+    public KeyCode movementKeyForward;
+
+    public KeyCode movementKeyBackward;
+
+    public bool move = false;
+
+
+
+    public GameObject HMD;
+    public GameObject Room;
+
+
+    public GameObject threshold_1;
+    public GameObject threshold_2;
+    public GameObject threshold_3;
+
+
+    public float speed_1;
+    public float speed_2;
+    public float speed_3;
+
+    public float speed = 1;
+    public float getSpeed(){
+        return speed;
+    }
+
 }
+
+
 
 
