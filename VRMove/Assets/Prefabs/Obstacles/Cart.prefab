@@ -358,7 +358,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: f502b583f1b834346aad462ec0979d94, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6f945888d750c49a37f75b21a56337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  proximity: 5
+  proximity: 8
   input: 101
   animator: {fileID: 0}
 --- !u!1 &8537374580359567498
