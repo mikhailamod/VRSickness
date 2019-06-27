@@ -20,7 +20,7 @@ public class MovementInterface : MonoBehaviour
     [Header("Stepper Settings")]
     public StepperSettings stepperSettings;
     public Transform tracker;
-    float prev_y;
+    float prev_y = 0;
 
     [Header("Tether Settings")]
     public TetherSettings tehterSettings;

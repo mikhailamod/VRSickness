@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR;
 
 /// <summary>
 /// Debug class used to test stepper without actually using tracked object
@@ -9,11 +10,17 @@ public class ManualMove : MonoBehaviour
 {
     public KeyCode upKey;
     public KeyCode downKey;
+    public KeyCode increaseDevice;
+
     public float maxHeight;
     public float minHeight;
     public float speed;
     public Transform camera;
     public float distance = 10f;
+
+    public SteamVR_TrackedObject trackedObject;
+    public int currentDeviceIndex = 0;
+
 
     // Update is called once per frame
     void Update()
@@ -24,6 +31,12 @@ public class ManualMove : MonoBehaviour
         Vector3 fixedX = new Vector3(0, transform.position.y, transform.position.z);
         transform.position = fixedX;
         
+        if(Input.GetKeyDown(increaseDevice))
+        {
+            if(currentDeviceIndex < 14) { trackedObject.SetDeviceIndex(currentDeviceIndex++); }
+            else { trackedObject.SetDeviceIndex(0); }
+        }
+
         //move up
         if(Input.GetKey(upKey))
         {
