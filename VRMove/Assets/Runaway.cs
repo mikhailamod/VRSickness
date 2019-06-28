@@ -6,6 +6,8 @@ public class Runaway : MonoBehaviour
 {
 
 public GameObject playerObject;
+public GameObject horseObstacle;
+private bool beingHandled = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,26 @@ public GameObject playerObject;
         if (dist<5){
 		Debug.Log("Time to run");
 		AnimationControl animationControl = GetComponent<AnimationControl>();
-		animationControl.SetAnimation("isWalking");
-	}
+		
+		animationControl.SetAnimation("isRunning");
+		if( /*some case  */ !beingHandled )
+    {
+        StartCoroutine( HandleIt() );
     }
+		
+
+	}
+    
+
+IEnumerator HandleIt()
+{
+    beingHandled = true;
+    // process pre-yield
+    yield return new WaitForSeconds( 0.1f );
+    // process post-yield
+LerpAway lerpAway = horseObstacle.GetComponent<LerpAway>();
+		lerpAway.move = true;
+    beingHandled = false;
+}
+}
 }
