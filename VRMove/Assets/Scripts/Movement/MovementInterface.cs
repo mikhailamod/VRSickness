@@ -107,6 +107,11 @@ public class MovementInterface : MonoBehaviour
             Debug.Log("Keyboard now");
             state = MovementState.KEYBOARD;
         }
+
+        if(Input.GetKeyDown(KeyCode.KeypadPlus))
+        {
+
+        }
     }
 
     void ManageKeyboard()
@@ -132,7 +137,10 @@ public class MovementInterface : MonoBehaviour
         float current_y = tracker.position.y;
         float amount = stepperSettings.speed * Mathf.Abs(current_y - prev_y);
         prev_y = current_y;
-        playerMovement.Move(amount * Time.deltaTime);        
+        if(amount > 0)
+        {
+            playerMovement.Move(amount * Time.deltaTime);
+        }      
 
     }
 
