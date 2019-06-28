@@ -122,7 +122,6 @@ public class MovementInterface : MonoBehaviour
         
         if(walkAction.GetAxis(SteamVR_Input_Sources.Any) != 0)
         {
-            Debug.Log("Triggered!");
             float amount = walkAction.GetAxis(SteamVR_Input_Sources.Any) * controllerSettings.speed;
             playerMovement.Move(amount * Time.deltaTime);
         }

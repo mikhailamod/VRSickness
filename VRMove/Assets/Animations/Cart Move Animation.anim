@@ -665,7 +665,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Cart 3
+    path: Cart 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -675,7 +675,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Cart 3
+    path: Cart 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -685,7 +685,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Cart 3
+    path: Cart 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -695,7 +695,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Cart 1
+    path: Cart 3
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -705,7 +705,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Cart 1
+    path: Cart 3
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -715,7 +715,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Cart 1
+    path: Cart 3
     classID: 4
     script: {fileID: 0}
   - curve:

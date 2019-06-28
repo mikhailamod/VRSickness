@@ -6,7 +6,7 @@ public class GateObstacle : Obstacle
 {
 
     public Animator animator;
-
+    public SoundManager soundManager;
 
     protected override void Start()
     {
@@ -16,6 +16,7 @@ public class GateObstacle : Obstacle
 
     protected override void Trigger()
     {
+        soundManager.playSound("gateOpen");
         animator.SetBool("OpenGate", true);
     }
 }
