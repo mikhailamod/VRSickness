@@ -11,7 +11,6 @@ public class MovementInterface : MonoBehaviour
     [Header("General Settings")]
     public MovementState state;
     public PlayerMovement playerMovement;
-    public TextMeshProUGUI interactText;
 
     [Header("Keyboard Settings")]
     public KeyboardSettings keyboardSettings;
@@ -80,6 +79,23 @@ public class MovementInterface : MonoBehaviour
         prev_y = 0f;
     }
 
+    public string getState()
+    {
+        switch (state)
+        {
+            case MovementState.KEYBOARD:
+                return "keyboard";
+            case MovementState.CONTROLLER:
+                return "controller";
+            case MovementState.STEPPER:
+                return "stepper";
+            case MovementState.TETHER:
+                return "tether";
+            default:
+                return "keyboard";
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -87,18 +103,14 @@ public class MovementInterface : MonoBehaviour
         {
             case MovementState.KEYBOARD:
                 ManageKeyboard();
-                ChangeText("Press E");
                 break;
             case MovementState.CONTROLLER:
                 ManageController();
-                ChangeText("Press X");
                 break;
             case MovementState.STEPPER:
                 ManageStepper();
-                ChangeText("Press touchpad");
                 break;
             case MovementState.TETHER:
-                ChangeText("Press touchpad");
                 break;
         }
 
@@ -122,11 +134,6 @@ public class MovementInterface : MonoBehaviour
             Debug.Log("Stepper now");
             state = MovementState.STEPPER;
         }
-    }
-
-    void ChangeText(string text)
-    {
-        interactText.text = text + " to interact";
     }
 
     void ManageKeyboard()
