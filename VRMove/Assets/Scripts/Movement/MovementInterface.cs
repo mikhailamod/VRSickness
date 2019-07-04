@@ -22,7 +22,8 @@ public class MovementInterface : MonoBehaviour
     public StepperSettings stepperSettings;
     public Transform tracker;
     public SteamVR_TrackedObject trackerObject;
-    float prev_y = 0;
+    float previous_y = 0;
+    float previous_vy = 0;
     public int currentDevice = 0;
 
     [Header("Tether Settings")]
@@ -77,7 +78,7 @@ public class MovementInterface : MonoBehaviour
         {
             playerMovement = GetComponent<PlayerMovement>();
         }
-        prev_y = 0f;
+        previous_y = 0f;
     }
 
     // Update is called once per frame
@@ -143,9 +144,13 @@ public class MovementInterface : MonoBehaviour
     void ManageStepper()
     {
         float current_y = tracker.position.y;
-        float amount = stepperSettings.speed * stepperSettings.scalingFactor * Mathf.Abs(current_y - prev_y);
-        prev_y = current_y;
-        if(amount > 0)
+        float current_vy = (current_y - previous_y)/Time.deltaTime;
+        float accelaration = Mathf.Abs((current_vy - previous_vy)/Time.deltaTime);
+        previous_y = current_y;
+        previous_vy = current_vy;
+
+        float amount = stepperSettings.speed * stepperSettings.scalingFactor * accelaration;
+        if (amount > 0)
         {
             playerMovement.Move(amount * Time.deltaTime);
         }      
@@ -208,7 +213,7 @@ public class ControllerSettings
 public class StepperSettings
 {
     public float speed;
-    public float scalingFactor = 5f;
+    public float scalingFactor;
 }
 
 [System.Serializable]
