@@ -19,7 +19,7 @@ public abstract class Obstacle : MonoBehaviour
 
     public TextMeshProUGUI textMesh;
 
-    bool hasTriggered = false;
+    protected bool hasTriggered = false;
 
     protected virtual void Start()
     {

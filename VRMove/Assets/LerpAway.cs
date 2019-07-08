@@ -13,18 +13,15 @@ public class LerpAway : MonoBehaviour
 	[Range(0f, 1f)]
 	private float lerpPct = 0.5f;
 	public bool move = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if (move){
-	
-	transform.position = Vector3.MoveTowards(startTransform.position, endTransform.position, lerpPct);
-	}
+        if (move)
+        {
+            transform.position = Vector3.MoveTowards(startTransform.position,
+                                                    endTransform.position,
+                                                    lerpPct);
+        }
     }
 }
