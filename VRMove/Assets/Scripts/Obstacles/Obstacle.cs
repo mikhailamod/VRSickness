@@ -17,10 +17,13 @@ public abstract class Obstacle : MonoBehaviour
 
     public List<Outline> outlines;
 
+    TextMeshProUGUI textMesh;
+
     protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("MainCamera").transform;
         movementInterface = player.GetComponent<MovementInterface>();
+        textMesh = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
         if(billboard != null)
         {
@@ -37,6 +40,15 @@ public abstract class Obstacle : MonoBehaviour
             if(billboard != null)
             {
                 billboard.SetActive(true);
+                switch(movementInterface.state)
+                {
+                    case MovementState.KEYBOARD:
+                        textMesh.text = "Press X to interact";
+                        break;
+                    default:
+                        textMesh.text = "Press touchpad to interact";
+                        break;
+                }
                 EnableOutlines();
             }
             if(movementInterface.state == MovementState.KEYBOARD && Input.GetKeyDown(input))
