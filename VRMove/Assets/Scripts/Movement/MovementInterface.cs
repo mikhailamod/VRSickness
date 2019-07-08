@@ -36,14 +36,7 @@ public class MovementInterface : MonoBehaviour
             tetherSettings.move = true;
             // tetherSettings.speed = tetherSettings.speed_1;
         }
-        // else if (other.gameObject.CompareTag("Thresh2"))
-        // {
-            // tetherSettings.speed = tetherSettings.speed_2;
-        // }
-        // else if (other.gameObject.CompareTag("Thresh3"))
-        // {
-            // tetherSettings.speed = tetherSettings.speed_3;
-        // }
+
     }
 
     public void exitTag(Collider other)
@@ -55,22 +48,7 @@ public class MovementInterface : MonoBehaviour
                 tetherSettings.move = false;
             }
         }
-        // if (other.gameObject.CompareTag("Thresh2"))
-        // {
-            // if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
-            // {
-                // tetherSettings.speed= tetherSettings.speed_1;
-            // }
-        // }
-        // if (other.gameObject.CompareTag("Thresh3"))
-        // {
-            // if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
-            // {
-                // tetherSettings.speed= tetherSettings.speed_2;
-            // }
-        // }
     }
-
 
     void Start()
     {
@@ -100,23 +78,12 @@ public class MovementInterface : MonoBehaviour
                 break;
         }
 
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            Debug.Log("Controller now");
-            state = MovementState.CONTROLLER;
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Debug.Log("Keyboard now");
-            state = MovementState.KEYBOARD;
-        }
-
-        if(Input.GetKeyDown(KeyCode.KeypadPlus))
+        if(Input.GetKeyDown(KeyBindings.INCREASE_TRACKED_OBJECT))
         {
             currentDevice++;
             trackerObject.SetDeviceIndex(currentDevice);
         }
-        if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        if (Input.GetKeyDown(KeyBindings.DECREASE_TRACKED_OBJECT))
         {
             currentDevice--;
             trackerObject.SetDeviceIndex(currentDevice);
@@ -176,10 +143,6 @@ public class MovementInterface : MonoBehaviour
             playerMovement.Move( tetherSettings.getSpeed()* Time.deltaTime);
         }
     }
-
-
-    
-
 }
 
 /// <summary>
@@ -199,7 +162,7 @@ public enum MovementState
 [System.Serializable]
 public class KeyboardSettings
 {
-    public KeyCode movementKey;
+    public KeyCode movementKey = KeyBindings.MOVE_FORWARD;
     public float speed;
 }
 
