@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
+using TMPro;
 
 public abstract class Obstacle : MonoBehaviour
 {
 
     public float proximity;
     public KeyCode input;
+    public GameObject billboard;
 
     protected Transform player;
     protected MovementInterface movementInterface;
@@ -16,6 +18,11 @@ public abstract class Obstacle : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("MainCamera").transform;
         movementInterface = player.GetComponent<MovementInterface>();
+
+        if(billboard != null)
+        {
+            billboard.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -23,6 +30,10 @@ public abstract class Obstacle : MonoBehaviour
     {
         if (Mathf.Abs(transform.position.z - player.position.z) < proximity)
         {
+            if(billboard != null)
+            {
+                billboard.SetActive(true);
+            }
             if(movementInterface.state == MovementState.KEYBOARD && Input.GetKeyDown(input))
             {
                 Trigger();

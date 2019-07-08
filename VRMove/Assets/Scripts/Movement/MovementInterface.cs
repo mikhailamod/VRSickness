@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
+using TMPro;
 
 //temp edit
 [RequireComponent(typeof(PlayerMovement))]
@@ -81,6 +82,23 @@ public class MovementInterface : MonoBehaviour
         previous_y = 0f;
     }
 
+    public string getState()
+    {
+        switch (state)
+        {
+            case MovementState.KEYBOARD:
+                return "keyboard";
+            case MovementState.CONTROLLER:
+                return "controller";
+            case MovementState.STEPPER:
+                return "stepper";
+            case MovementState.TETHER:
+                return "tether";
+            default:
+                return "keyboard";
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -96,7 +114,6 @@ public class MovementInterface : MonoBehaviour
                 ManageStepper();
                 break;
             case MovementState.TETHER:
-                ManageTether();
                 break;
         }
 
