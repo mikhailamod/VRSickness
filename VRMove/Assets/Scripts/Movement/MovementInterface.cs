@@ -22,7 +22,10 @@ public class MovementInterface : MonoBehaviour
     [Header("Stepper Settings")]
     public StepperSettings stepperSettings;
     public Transform tracker;
-    float prev_y = 0;
+    public SteamVR_TrackedObject trackerObject;
+    float previous_y = 0;
+    float previous_vy = 0;
+    public int currentDevice = 0;
 
     [Header("Tether Settings")]
     public TetherSettings tetherSettings;
@@ -32,16 +35,16 @@ public class MovementInterface : MonoBehaviour
         if (other.gameObject.CompareTag("Thresh1"))
         {
             tetherSettings.move = true;
-            tetherSettings.speed = tetherSettings.speed_1;
+            // tetherSettings.speed = tetherSettings.speed_1;
         }
-        else if (other.gameObject.CompareTag("Thresh2"))
-        {
-            tetherSettings.speed = tetherSettings.speed_2;
-        }
-        else if (other.gameObject.CompareTag("Thresh3"))
-        {
-            tetherSettings.speed = tetherSettings.speed_3;
-        }
+        // else if (other.gameObject.CompareTag("Thresh2"))
+        // {
+            // tetherSettings.speed = tetherSettings.speed_2;
+        // }
+        // else if (other.gameObject.CompareTag("Thresh3"))
+        // {
+            // tetherSettings.speed = tetherSettings.speed_3;
+        // }
     }
 
     public void exitTag(Collider other)
@@ -53,20 +56,20 @@ public class MovementInterface : MonoBehaviour
                 tetherSettings.move = false;
             }
         }
-        if (other.gameObject.CompareTag("Thresh2"))
-        {
-            if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
-            {
-                tetherSettings.speed= tetherSettings.speed_1;
-            }
-        }
-        if (other.gameObject.CompareTag("Thresh3"))
-        {
-            if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
-            {
-                tetherSettings.speed= tetherSettings.speed_2;
-            }
-        }
+        // if (other.gameObject.CompareTag("Thresh2"))
+        // {
+            // if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
+            // {
+                // tetherSettings.speed= tetherSettings.speed_1;
+            // }
+        // }
+        // if (other.gameObject.CompareTag("Thresh3"))
+        // {
+            // if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
+            // {
+                // tetherSettings.speed= tetherSettings.speed_2;
+            // }
+        // }
     }
 
 
@@ -76,7 +79,7 @@ public class MovementInterface : MonoBehaviour
         {
             playerMovement = GetComponent<PlayerMovement>();
         }
-        prev_y = 0f;
+        previous_y = 0f;
     }
 
     public string getState()
@@ -124,15 +127,16 @@ public class MovementInterface : MonoBehaviour
             Debug.Log("Keyboard now");
             state = MovementState.KEYBOARD;
         }
-        if (Input.GetKeyDown(KeyCode.T))
+
+        if(Input.GetKeyDown(KeyCode.KeypadPlus))
         {
-            Debug.Log("Tether now");
-            state = MovementState.TETHER;
+            currentDevice++;
+            trackerObject.SetDeviceIndex(currentDevice);
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.KeypadMinus))
         {
-            Debug.Log("Stepper now");
-            state = MovementState.STEPPER;
+            currentDevice--;
+            trackerObject.SetDeviceIndex(currentDevice);
         }
     }
 
@@ -157,9 +161,16 @@ public class MovementInterface : MonoBehaviour
     void ManageStepper()
     {
         float current_y = tracker.position.y;
-        float amount = stepperSettings.speed * Mathf.Abs(current_y - prev_y);
-        prev_y = current_y;
-        playerMovement.Move(amount * Time.deltaTime);        
+        float current_vy = (current_y - previous_y)/Time.deltaTime;
+        float accelaration = Mathf.Abs((current_vy - previous_vy)/Time.deltaTime);
+        previous_y = current_y;
+        previous_vy = current_vy;
+
+        float amount = stepperSettings.speed * stepperSettings.scalingFactor * accelaration;
+        if (amount > 0)
+        {
+            playerMovement.Move(amount * Time.deltaTime);
+        }      
 
     }
 
@@ -219,6 +230,7 @@ public class ControllerSettings
 public class StepperSettings
 {
     public float speed;
+    public float scalingFactor;
 }
 
 [System.Serializable]
@@ -249,7 +261,11 @@ public class TetherSettings
 
     public float speed = 1;
     public float getSpeed(){
-        return speed;
+        if (!move) return 0; 
+        float distance = HMD.transform.position.z-threshold_1.transform.position.z;
+        if (distance<0) throw new System.Exception("Distance shouldn't be negative");
+        return (float)(1+distance*3.25);
+        // return 2+1/(1+Mathf.Exp(distance));
     }
 
 }
