@@ -17,13 +17,15 @@ public abstract class Obstacle : MonoBehaviour
 
     public List<Outline> outlines;
 
-    TextMeshProUGUI textMesh;
+    public TextMeshProUGUI textMesh;
+
+    bool hasTriggered = false;
 
     protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("MainCamera").transform;
         movementInterface = player.GetComponent<MovementInterface>();
-        textMesh = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        textMesh = billboard.GetComponentInChildren<TextMeshProUGUI>();
 
         if(billboard != null)
         {
@@ -39,28 +41,34 @@ public abstract class Obstacle : MonoBehaviour
         {
             if(billboard != null)
             {
-                billboard.SetActive(true);
+                
                 switch(movementInterface.state)
                 {
                     case MovementState.KEYBOARD:
-                        textMesh.text = "Press X to interact";
+                        textMesh.text = "Press E to interact";
                         break;
                     default:
                         textMesh.text = "Press touchpad to interact";
                         break;
                 }
-                EnableOutlines();
+                if (!hasTriggered)
+                {
+                    EnableOutlines();
+                    billboard.SetActive(true);
+                }
             }
             if(movementInterface.state == MovementState.KEYBOARD && Input.GetKeyDown(input))
             {
                 billboard.SetActive(false);
                 DisableOutlines();
+                hasTriggered = true;
                 Trigger();
             }
             else if(SteamVR_Actions._default.Interact.GetStateDown(SteamVR_Input_Sources.Any))
             {
                 billboard.SetActive(false);
                 DisableOutlines();
+                hasTriggered = true;
                 Trigger();
             }  
         }
