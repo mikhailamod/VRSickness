@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd9418c229c40940a12199639106c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  proximity: 3
+  proximity: 8
   input: 101
   animator: {fileID: 0}
 --- !u!1 &526568902991181132
