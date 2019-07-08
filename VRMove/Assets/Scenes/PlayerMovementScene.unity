@@ -440,6 +440,22 @@ MonoBehaviour:
     needsReinit: 0
   controllerSettings:
     speed: 0
+  stepperSettings:
+    speed: 0
+  tracker: {fileID: 0}
+  tetherSettings:
+    movementKeyForward: 0
+    movementKeyBackward: 0
+    move: 0
+    HMD: {fileID: 0}
+    Room: {fileID: 0}
+    threshold_1: {fileID: 0}
+    threshold_2: {fileID: 0}
+    threshold_3: {fileID: 0}
+    speed_1: 0
+    speed_2: 0
+    speed_3: 0
+    speed: 1
 --- !u!114 &643030444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,7 +508,7 @@ Terrain:
   serializedVersion: 4
   m_TerrainData: {fileID: 15600000, guid: e442fd46773eecf4982462238ee359bb, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 100
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 80
