@@ -14,7 +14,7 @@ public class CartObstacle : Obstacle
 
     protected override void Trigger()
     {
-        SoundManager.Instance.playSound("wagonmove");
+        SoundManager.Instance.PlaySound("wagonmove");
         animator.SetBool("MoveCart", true);
     }
 }

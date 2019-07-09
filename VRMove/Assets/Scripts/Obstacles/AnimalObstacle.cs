@@ -74,7 +74,7 @@ public class AnimalObstacle : Obstacle
     {
         if(key.Length > 0)
         {
-            return SoundManager.Instance.isPlaying(key);
+            return SoundManager.Instance.IsPlaying(key);
         }
         return false;
     }
@@ -83,7 +83,7 @@ public class AnimalObstacle : Obstacle
     {
         if(key.Length > 0)
         {
-            SoundManager.Instance.playSound(key);
+            SoundManager.Instance.PlaySound(key);
             return;
         }
         return;
@@ -93,7 +93,7 @@ public class AnimalObstacle : Obstacle
     {
         if (key.Length > 0)
         {
-            SoundManager.Instance.stopSound(key);
+            SoundManager.Instance.StopSound(key);
             return;
         }
         return;
@@ -111,9 +111,9 @@ public class AnimalObstacle : Obstacle
 
     IEnumerator BackToIdle()
     {
-        Debug.Log("backtoodle");
+        Debug.Log("BackToIdle called");
         yield return new WaitForSecondsRealtime(animationLength);
         animator.SetBool(walkingAnimationKey, false);
-        Debug.Log("End");
+        Debug.Log("End of BackToIdle");
     }
 }

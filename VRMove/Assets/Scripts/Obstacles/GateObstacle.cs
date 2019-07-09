@@ -15,7 +15,7 @@ public class GateObstacle : Obstacle
 
     protected override void Trigger()
     {
-        SoundManager.Instance.playSound("gateOpen");
+        SoundManager.Instance.PlaySound("gateOpen");
         animator.SetBool("OpenGate", true);
     }
 }

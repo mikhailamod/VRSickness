@@ -9,13 +9,13 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position += new Vector3(0, 0, delta);
 
-        if(!SoundManager.Instance.isPlaying(walkType))
+        if(!SoundManager.Instance.IsPlaying(walkType))
         {
-            SoundManager.Instance.playSound(walkType);
+            SoundManager.Instance.PlaySound(walkType);
         }
     }
 
-    public void setWalkType(string walkType)
+    public void SetWalkType(string walkType)
     {
         this.walkType = walkType;
     }

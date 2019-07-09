@@ -25,10 +25,10 @@ public abstract class Obstacle : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("MainCamera").transform;
         movementInterface = player.GetComponent<MovementInterface>();
-        textMesh = billboard.GetComponentInChildren<TextMeshProUGUI>();
 
         if(billboard != null)
         {
+            textMesh = billboard.GetComponentInChildren<TextMeshProUGUI>();
             billboard.SetActive(false);
             DisableOutlines();
         }
@@ -59,14 +59,14 @@ public abstract class Obstacle : MonoBehaviour
             }
             if(movementInterface.state == MovementState.KEYBOARD && Input.GetKeyDown(input))
             {
-                billboard.SetActive(false);
+                if (billboard != null) { billboard.SetActive(false); }
                 DisableOutlines();
                 hasTriggered = true;
                 Trigger();
             }
             else if(SteamVR_Actions._default.Interact.GetStateDown(SteamVR_Input_Sources.Any))
             {
-                billboard.SetActive(false);
+                if (billboard != null) { billboard.SetActive(false); }
                 DisableOutlines();
                 hasTriggered = true;
                 Trigger();

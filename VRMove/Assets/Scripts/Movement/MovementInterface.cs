@@ -30,7 +30,7 @@ public class MovementInterface : MonoBehaviour
     [Header("Tether Settings")]
     public TetherSettings tetherSettings;
 
-    public void enterTag(Collider other)
+    public void EnterTag(Collider other)
     {
         if (other.gameObject.CompareTag("Thresh1"))
         {
@@ -40,7 +40,7 @@ public class MovementInterface : MonoBehaviour
 
     }
 
-    public void exitTag(Collider other)
+    public void ExitTag(Collider other)
     {
         if (other.gameObject.CompareTag("Thresh1"))
         {
@@ -60,7 +60,7 @@ public class MovementInterface : MonoBehaviour
         previous_y = 0f;
     }
 
-    public string getState()
+    public string GetState()
     {
         switch (state)
         {

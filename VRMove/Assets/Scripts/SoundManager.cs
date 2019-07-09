@@ -38,17 +38,17 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void playSound(string key)
+    public void PlaySound(string key)
     {
         soundEffectsMap[key].Play();
     }
 
-    public void stopSound(string key)
+    public void StopSound(string key)
     {
         soundEffectsMap[key].Stop();
     }
 
-    public bool isPlaying(string key)
+    public bool IsPlaying(string key)
     {
         return soundEffectsMap[key].isPlaying;
     }
