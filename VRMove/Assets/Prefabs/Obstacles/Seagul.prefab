@@ -399,6 +399,8 @@ MonoBehaviour:
   animator: {fileID: 1835657837221680434}
   walkingAnimationKey: isFlying
   idleAnimationKey: isSitting
+  walkingSound: birdFlap
+  idleSound: 
   beginPos: {fileID: 1742300098809929315}
   endPos: {fileID: 1742300098401657036}
   maxDistanceDelta: 3
