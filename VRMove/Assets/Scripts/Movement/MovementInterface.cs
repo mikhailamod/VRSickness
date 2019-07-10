@@ -26,6 +26,7 @@ public class MovementInterface : MonoBehaviour
     float previous_y = 0;
     float previous_vy = 0;
     public int currentDevice = 0;
+    bool hasStarted = false;
 
     [Header("Tether Settings")]
     public TetherSettings tetherSettings;
@@ -105,6 +106,10 @@ public class MovementInterface : MonoBehaviour
             currentDevice--;
             trackerObject.SetDeviceIndex(currentDevice);
         }
+        if(Input.GetKeyDown(KeyBindings.START_STEPPER))
+        {
+            hasStarted = true;
+        }
     }
 
     void ManageKeyboard()
@@ -127,18 +132,24 @@ public class MovementInterface : MonoBehaviour
 
     void ManageStepper()
     {
-        float current_y = tracker.position.y;
-        float current_vy = (current_y - previous_y)/Time.deltaTime;
-        float accelaration = Mathf.Abs((current_vy - previous_vy)/Time.deltaTime);
-        previous_y = current_y;
-        previous_vy = current_vy;
-
-        float amount = stepperSettings.speed * stepperSettings.scalingFactor * accelaration;
-        if (amount > 0)
+        if(hasStarted)
         {
-            playerMovement.Move(amount * Time.deltaTime);
-        }      
+            float current_y = tracker.position.y;
+            float current_vy = Mathf.Abs(current_y - previous_y) / Time.deltaTime;
+            float accelaration = Mathf.Abs((current_vy - previous_vy) / Time.deltaTime);
+            previous_y = current_y;
+            previous_vy = current_vy;
 
+            float amount = stepperSettings.speed * stepperSettings.scalingFactor * accelaration;
+            if (amount > stepperSettings.threshold)
+            {
+                playerMovement.Move(amount * Time.deltaTime);
+            }
+        }
+        else
+        {
+            previous_y = tracker.position.y;
+        }
     }
 
     void ManageTether()
@@ -194,6 +205,7 @@ public class StepperSettings
 {
     public float speed;
     public float scalingFactor;
+    public float threshold =  0.1f;
 }
 
 [System.Serializable]

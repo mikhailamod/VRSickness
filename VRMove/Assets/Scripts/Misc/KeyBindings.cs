@@ -10,4 +10,7 @@ public class KeyBindings : MonoBehaviour
     public static readonly KeyCode MOVE_FORWARD = KeyCode.W;
     public static readonly KeyCode INCREASE_TRACKED_OBJECT = KeyCode.KeypadPlus;
     public static readonly KeyCode DECREASE_TRACKED_OBJECT = KeyCode.KeypadMinus;
+    public static readonly KeyCode START_STEPPER = KeyCode.Z;
+    public static readonly KeyCode STEPPER_THRESHOLD_INCREASE = KeyCode.B;
+    public static readonly KeyCode STEPPER_THRESHOLD_DECREASE = KeyCode.V;
 }

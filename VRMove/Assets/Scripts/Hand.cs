@@ -65,6 +65,7 @@ public class Hand : MonoBehaviour
             currentInteractable.activeHand.Drop();
 
         currentInteractable.transform.position = transform.position;
+        currentInteractable.transform.rotation = transform.rotation;
         Rigidbody targetBody = currentInteractable.GetComponent<Rigidbody>();
         fixedJoint.connectedBody = targetBody;
         currentInteractable.activeHand = this;
