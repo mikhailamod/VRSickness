@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 using TMPro;
+using Unity.Labs.SuperScience;
 
 //temp edit
 [RequireComponent(typeof(PlayerMovement))]
@@ -27,6 +28,7 @@ public class MovementInterface : MonoBehaviour
     float previous_vy = 0;
     public int currentDevice = 0;
     bool hasStarted = false;
+    PhysicsTracker physicsTracker = new PhysicsTracker();//use tracker as param
 
     [Header("Tether Settings")]
     public TetherSettings tetherSettings;
@@ -106,10 +108,15 @@ public class MovementInterface : MonoBehaviour
             currentDevice--;
             trackerObject.SetDeviceIndex(currentDevice);
         }
-        if(Input.GetKeyDown(KeyBindings.START_STEPPER))
+
+        if(!hasStarted)
         {
-            hasStarted = true;
-        }
+            if (Input.GetKeyDown(KeyBindings.START_STEPPER) ||
+               (SteamVR_Actions._default.Interact.GetStateDown(SteamVR_Input_Sources.Any)))
+            {
+                hasStarted = true;
+            }
+        } 
     }
 
     void ManageKeyboard()
@@ -134,16 +141,19 @@ public class MovementInterface : MonoBehaviour
     {
         if(hasStarted)
         {
+            physicsTracker.Update(tracker.position, tracker.rotation, Time.smoothDeltaTime);
+            /*
             float current_y = tracker.position.y;
             float current_vy = Mathf.Abs(current_y - previous_y) / Time.deltaTime;
             float accelaration = Mathf.Abs((current_vy - previous_vy) / Time.deltaTime);
             previous_y = current_y;
             previous_vy = current_vy;
-
-            float amount = stepperSettings.speed * stepperSettings.scalingFactor * accelaration;
+            */
+            Debug.Log(Mathf.Abs(physicsTracker.Velocity.y));
+            float amount = Mathf.Abs(stepperSettings.speed * stepperSettings.scalingFactor * physicsTracker.Velocity.y);
             if (amount > stepperSettings.threshold)
             {
-                playerMovement.Move(amount * Time.deltaTime);
+                playerMovement.Move(amount * Time.smoothDeltaTime);
             }
         }
         else
