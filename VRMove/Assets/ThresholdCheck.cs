@@ -10,11 +10,11 @@ public class ThresholdCheck : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        movementInterface.enterTag(other);
+        movementInterface.EnterTag(other);
     }
 
     void OnTriggerExit(Collider other)
     {
-        movementInterface.exitTag(other);
+        movementInterface.ExitTag(other);
     }
 }

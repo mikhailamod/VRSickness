@@ -8,6 +8,8 @@ TagManager:
   - Thresh1
   - Thresh3
   - Bridge
+  - Interactable
+  - Hand
   layers:
   - Default
   - TransparentFX

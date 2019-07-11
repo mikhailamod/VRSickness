@@ -8,13 +8,13 @@ public class BridgeObstacle : Obstacle
     //play bridge walk sound
     void OnTriggerEnter(Collider other)
     {
-        playerMovement.setWalkType("walkWood");
+        playerMovement.SetWalkType("walkWood");
     }
 
     //play normal walk sound
     void OnTriggerExit(Collider other)
     {
-        playerMovement.setWalkType("walk");
+        playerMovement.SetWalkType("walk");
     }
 
     protected override void Trigger()

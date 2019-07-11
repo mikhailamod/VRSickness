@@ -8,7 +8,7 @@ public class ReloadScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyBindings.RELOAD_SCENE))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
