@@ -95,7 +95,20 @@ public class MovementInterface : MonoBehaviour
                 break;
         }
 
-        if(Input.GetKeyDown(KeyBindings.INCREASE_TRACKED_OBJECT))
+        if(Input.GetKeyDown(KeyBindings.CHANGE_TO_CONTROLLER))
+        {
+            state = MovementState.CONTROLLER;
+        }
+        if (Input.GetKeyDown(KeyBindings.CHANGE_TO_STEPPER))
+        {
+            state = MovementState.STEPPER;
+        }
+        if (Input.GetKeyDown(KeyBindings.CHANGE_TO_TETHER))
+        {
+            state = MovementState.TETHER;
+        }
+
+        if (Input.GetKeyDown(KeyBindings.INCREASE_TRACKED_OBJECT))
         {
             currentDevice++;
             trackerObject.SetDeviceIndex(currentDevice);
