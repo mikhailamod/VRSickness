@@ -40,16 +40,20 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(string key)
     {
-        soundEffectsMap[key].Play();
+        if(soundEffectsMap.ContainsKey(key)) { soundEffectsMap[key].Play(); }
     }
 
     public void StopSound(string key)
     {
-        soundEffectsMap[key].Stop();
+        if (soundEffectsMap.ContainsKey(key)) { soundEffectsMap[key].Stop(); }
     }
 
     public bool IsPlaying(string key)
     {
-        return soundEffectsMap[key].isPlaying;
+        if (soundEffectsMap.ContainsKey(key))
+        {
+            return soundEffectsMap[key].isPlaying;
+        }
+        return false;
     }
 }
