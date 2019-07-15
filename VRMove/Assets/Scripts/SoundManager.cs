@@ -24,16 +24,29 @@ public class SoundManager : MonoBehaviour
 
     public void playSound(string key)
     {
-        soundEffectsMap[key].Play();
+        if(soundEffectsMap.ContainsKey(key))
+        {
+            soundEffectsMap[key].Play();
+        }
+        
     }
 
     public void stopSound(string key)
     {
-        soundEffectsMap[key].Stop();
+        if (soundEffectsMap.ContainsKey(key))
+        {
+            soundEffectsMap[key].Stop();
+        }
     }
 
     public bool isPlaying(string key)
     {
-        return soundEffectsMap[key].isPlaying;
+        /*if (soundEffectsMap.ContainsKey(key))
+        {
+            return soundEffectsMap[key].isPlaying;
+        }
+        */
+        return false;
     }
+
 }

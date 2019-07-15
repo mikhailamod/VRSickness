@@ -10,10 +10,11 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position += new Vector3(0, 0, delta);
 
-        if(!soundManager.isPlaying(walkType))
+        /*if(!soundManager.isPlaying(walkType))
         {
             soundManager.playSound(walkType);
         }
+        */
     }
 
     public void setWalkType(string walkType)
