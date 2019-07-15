@@ -95,6 +95,7 @@ public class MovementInterface : MonoBehaviour
                 ManageStepper();
                 break;
             case MovementState.TETHER:
+                ManageTether();
                 break;
         }
 
