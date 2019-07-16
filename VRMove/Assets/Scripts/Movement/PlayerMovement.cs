@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public SoundManager soundManager;
     public string walkType = "walk";
     public void Move(float delta)
     {
         transform.position += new Vector3(0, 0, delta);
 
-        /*if(!soundManager.isPlaying(walkType))
+        if(SoundManager.Instance != null && !SoundManager.Instance.IsPlaying(walkType))
         {
-            soundManager.playSound(walkType);
+            SoundManager.Instance.PlaySound(walkType);
         }
         */
     }
 
-    public void setWalkType(string walkType)
+    public void SetWalkType(string walkType)
     {
         this.walkType = walkType;
     }

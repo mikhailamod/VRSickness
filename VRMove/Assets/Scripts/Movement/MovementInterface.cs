@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
+using TMPro;
+using Unity.Labs.SuperScience;
 
 //temp edit
 [RequireComponent(typeof(PlayerMovement))]
@@ -25,28 +27,23 @@ public class MovementInterface : MonoBehaviour
     float previous_y = 0;
     float previous_vy = 0;
     public int currentDevice = 0;
+    bool hasStarted = false;
+    PhysicsTracker physicsTracker = new PhysicsTracker();//use tracker as param
 
     [Header("Tether Settings")]
     public TetherSettings tetherSettings;
 
-    public void enterTag(Collider other)
+    public void EnterTag(Collider other)
     {
         if (other.gameObject.CompareTag("Thresh1"))
         {
             tetherSettings.move = true;
             // tetherSettings.speed = tetherSettings.speed_1;
         }
-        // else if (other.gameObject.CompareTag("Thresh2"))
-        // {
-            // tetherSettings.speed = tetherSettings.speed_2;
-        // }
-        // else if (other.gameObject.CompareTag("Thresh3"))
-        // {
-            // tetherSettings.speed = tetherSettings.speed_3;
-        // }
+
     }
 
-    public void exitTag(Collider other)
+    public void ExitTag(Collider other)
     {
         if (other.gameObject.CompareTag("Thresh1"))
         {
@@ -55,22 +52,7 @@ public class MovementInterface : MonoBehaviour
                 tetherSettings.move = false;
             }
         }
-        // if (other.gameObject.CompareTag("Thresh2"))
-        // {
-            // if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
-            // {
-                // tetherSettings.speed= tetherSettings.speed_1;
-            // }
-        // }
-        // if (other.gameObject.CompareTag("Thresh3"))
-        // {
-            // if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
-            // {
-                // tetherSettings.speed= tetherSettings.speed_2;
-            // }
-        // }
     }
-
 
     void Start()
     {
@@ -79,6 +61,23 @@ public class MovementInterface : MonoBehaviour
             playerMovement = GetComponent<PlayerMovement>();
         }
         previous_y = 0f;
+    }
+
+    public string GetState()
+    {
+        switch (state)
+        {
+            case MovementState.KEYBOARD:
+                return "keyboard";
+            case MovementState.CONTROLLER:
+                return "controller";
+            case MovementState.STEPPER:
+                return "stepper";
+            case MovementState.TETHER:
+                return "tether";
+            default:
+                return "keyboard";
+        }
     }
 
     // Update is called once per frame
@@ -100,27 +99,25 @@ public class MovementInterface : MonoBehaviour
                 break;
         }
 
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            Debug.Log("Controller now");
-            state = MovementState.CONTROLLER;
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Debug.Log("Keyboard now");
-            state = MovementState.KEYBOARD;
-        }
-
-        if(Input.GetKeyDown(KeyCode.KeypadPlus))
+        if(Input.GetKeyDown(KeyBindings.INCREASE_TRACKED_OBJECT))
         {
             currentDevice++;
             trackerObject.SetDeviceIndex(currentDevice);
         }
-        if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        if (Input.GetKeyDown(KeyBindings.DECREASE_TRACKED_OBJECT))
         {
             currentDevice--;
             trackerObject.SetDeviceIndex(currentDevice);
         }
+
+        if(!hasStarted)
+        {
+            if (Input.GetKeyDown(KeyBindings.START_STEPPER) ||
+               (SteamVR_Actions._default.Interact.GetStateDown(SteamVR_Input_Sources.Any)))
+            {
+                hasStarted = true;
+            }
+        } 
     }
 
     void ManageKeyboard()
@@ -143,18 +140,27 @@ public class MovementInterface : MonoBehaviour
 
     void ManageStepper()
     {
-        float current_y = tracker.position.y;
-        float current_vy = (current_y - previous_y)/Time.deltaTime;
-        float accelaration = Mathf.Abs((current_vy - previous_vy)/Time.deltaTime);
-        previous_y = current_y;
-        previous_vy = current_vy;
-
-        float amount = stepperSettings.speed * stepperSettings.scalingFactor * accelaration;
-        if (amount > 0)
+        if(hasStarted)
         {
-            playerMovement.Move(amount * Time.deltaTime);
-        }      
-
+            physicsTracker.Update(tracker.position, tracker.rotation, Time.smoothDeltaTime);
+            /*
+            float current_y = tracker.position.y;
+            float current_vy = Mathf.Abs(current_y - previous_y) / Time.deltaTime;
+            float accelaration = Mathf.Abs((current_vy - previous_vy) / Time.deltaTime);
+            previous_y = current_y;
+            previous_vy = current_vy;
+            */
+            Debug.Log(Mathf.Abs(physicsTracker.Velocity.y));
+            float amount = Mathf.Abs(stepperSettings.speed * stepperSettings.scalingFactor * physicsTracker.Velocity.y);
+            if (amount > stepperSettings.threshold)
+            {
+                playerMovement.Move(amount * Time.smoothDeltaTime);
+            }
+        }
+        else
+        {
+            previous_y = tracker.position.y;
+        }
     }
 
     void ManageTether()
@@ -176,10 +182,6 @@ public class MovementInterface : MonoBehaviour
             playerMovement.Move( tetherSettings.getSpeed()* Time.deltaTime);
         }
     }
-
-
-    
-
 }
 
 /// <summary>
@@ -199,7 +201,7 @@ public enum MovementState
 [System.Serializable]
 public class KeyboardSettings
 {
-    public KeyCode movementKey;
+    public KeyCode movementKey = KeyBindings.MOVE_FORWARD;
     public float speed;
 }
 
@@ -214,6 +216,7 @@ public class StepperSettings
 {
     public float speed;
     public float scalingFactor;
+    public float threshold =  0.1f;
 }
 
 [System.Serializable]

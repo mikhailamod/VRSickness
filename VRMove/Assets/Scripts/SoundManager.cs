@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager _instance;
+
+    public static SoundManager Instance { get { return _instance; } }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+
     [System.Serializable]
     public struct KeyVal
     {
@@ -22,7 +38,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void playSound(string key)
+    public void PlaySound(string key)
     {
         if(soundEffectsMap.ContainsKey(key))
         {
@@ -31,7 +47,7 @@ public class SoundManager : MonoBehaviour
         
     }
 
-    public void stopSound(string key)
+    public void StopSound(string key)
     {
         if (soundEffectsMap.ContainsKey(key))
         {
@@ -39,7 +55,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public bool isPlaying(string key)
+    public bool IsPlaying(string key)
     {
         /*if (soundEffectsMap.ContainsKey(key))
         {

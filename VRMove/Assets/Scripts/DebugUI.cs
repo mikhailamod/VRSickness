@@ -12,16 +12,25 @@ public class DebugUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.M))
+        if(Input.GetKeyDown(KeyBindings.INCREASE_SCALE))
         {
-            movementInterface.stepperSettings.scalingFactor += 1;
-            scaleText.text = "Scaling Factor: " + movementInterface.stepperSettings.scalingFactor;
+            movementInterface.stepperSettings.scalingFactor += 0.5f;
         }
-        if(Input.GetKeyDown(KeyCode.N))
+        if(Input.GetKeyDown(KeyBindings.DECREASE_SCALE))
         {
-            movementInterface.stepperSettings.scalingFactor -= 1;
-            scaleText.text = "Scaling Factor: " + movementInterface.stepperSettings.scalingFactor;
+            movementInterface.stepperSettings.scalingFactor -= 0.5f;
+        }
+        if (Input.GetKeyDown(KeyBindings.STEPPER_THRESHOLD_INCREASE))
+        {
+            movementInterface.stepperSettings.threshold += 0.1f;
+        }
+        if (Input.GetKeyDown(KeyBindings.STEPPER_THRESHOLD_DECREASE))
+        {
+            movementInterface.stepperSettings.threshold -= 0.1f;
         }
         speedText.text = "Speed Factor: " + movementInterface.stepperSettings.speed;
+        scaleText.text = "Scaling Factor: " + movementInterface.stepperSettings.scalingFactor +
+                         "\nCurrent Device: " + movementInterface.currentDevice +
+                         "\nThreshold: " + movementInterface.stepperSettings.threshold;
     }
 }
