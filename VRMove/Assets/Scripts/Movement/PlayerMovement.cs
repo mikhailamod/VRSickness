@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
         {
             SoundManager.Instance.PlaySound(walkType);
         }
-        */
     }
 
     public void SetWalkType(string walkType)

@@ -37,6 +37,7 @@ public class MovementInterface : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Thresh1"))
         {
+            Debug.Log("Collide");
             tetherSettings.move = true;
             // tetherSettings.speed = tetherSettings.speed_1;
         }
@@ -179,6 +180,7 @@ public class MovementInterface : MonoBehaviour
 
         if(tetherSettings.move == true)
         {
+            Debug.Log("Calling move");
             playerMovement.Move( tetherSettings.getSpeed()* Time.deltaTime);
         }
     }
