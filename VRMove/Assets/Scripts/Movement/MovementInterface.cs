@@ -152,10 +152,13 @@ public class MovementInterface : MonoBehaviour
             previous_vy = current_vy;
             */
             Debug.Log(Mathf.Abs(physicsTracker.Velocity.y));
-            float amount = Mathf.Abs(stepperSettings.speed * stepperSettings.scalingFactor * physicsTracker.Velocity.y);
+            float amount = Mathf.Abs(stepperSettings.speed  * physicsTracker.Velocity.y);
+            float dragAmount = Mathf.Abs(stepperSettings.dragScale * (1/physicsTracker.Velocity.y));
             if (amount > stepperSettings.threshold)
             {
-                playerMovement.Move(amount * Time.smoothDeltaTime);
+                //playerMovement.Move(amount * Time.smoothDeltaTime);
+                stepperSettings.rigidbody.AddForce(transform.forward * amount);
+                stepperSettings.rigidbody.drag = dragAmount;
             }
         }
         else
@@ -217,8 +220,9 @@ public class ControllerSettings
 public class StepperSettings
 {
     public float speed;
-    public float scalingFactor;
+    public float dragScale;
     public float threshold =  0.1f;
+    public Rigidbody rigidbody;
 }
 
 [System.Serializable]

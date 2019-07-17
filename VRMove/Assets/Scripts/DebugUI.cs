@@ -14,11 +14,11 @@ public class DebugUI : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyBindings.INCREASE_SCALE))
         {
-            movementInterface.stepperSettings.scalingFactor += 0.5f;
+            movementInterface.stepperSettings.dragScale += 0.5f;
         }
         if(Input.GetKeyDown(KeyBindings.DECREASE_SCALE))
         {
-            movementInterface.stepperSettings.scalingFactor -= 0.5f;
+            movementInterface.stepperSettings.dragScale -= 0.5f;
         }
         if (Input.GetKeyDown(KeyBindings.STEPPER_THRESHOLD_INCREASE))
         {
@@ -29,7 +29,7 @@ public class DebugUI : MonoBehaviour
             movementInterface.stepperSettings.threshold -= 0.1f;
         }
         speedText.text = "Speed Factor: " + movementInterface.stepperSettings.speed;
-        scaleText.text = "Scaling Factor: " + movementInterface.stepperSettings.scalingFactor +
+        scaleText.text = "Scaling Factor: " + movementInterface.stepperSettings.dragScale +
                          "\nCurrent Device: " + movementInterface.currentDevice +
                          "\nThreshold: " + movementInterface.stepperSettings.threshold;
     }
