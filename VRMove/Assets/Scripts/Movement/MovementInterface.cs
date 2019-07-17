@@ -24,8 +24,6 @@ public class MovementInterface : MonoBehaviour
     public StepperSettings stepperSettings;
     public Transform tracker;
     public SteamVR_TrackedObject trackerObject;
-    float previous_y = 0;
-    float previous_vy = 0;
     public int currentDevice = 0;
     bool hasStarted = false;
     PhysicsTracker physicsTracker = new PhysicsTracker();//use tracker as param
@@ -61,7 +59,6 @@ public class MovementInterface : MonoBehaviour
         {
             playerMovement = GetComponent<PlayerMovement>();
         }
-        previous_y = 0f;
     }
 
     public string GetState()
@@ -100,7 +97,20 @@ public class MovementInterface : MonoBehaviour
                 break;
         }
 
-        if(Input.GetKeyDown(KeyBindings.INCREASE_TRACKED_OBJECT))
+        if(Input.GetKeyDown(KeyBindings.CHANGE_TO_CONTROLLER))
+        {
+            state = MovementState.CONTROLLER;
+        }
+        if (Input.GetKeyDown(KeyBindings.CHANGE_TO_STEPPER))
+        {
+            state = MovementState.STEPPER;
+        }
+        if (Input.GetKeyDown(KeyBindings.CHANGE_TO_TETHER))
+        {
+            state = MovementState.TETHER;
+        }
+
+        if (Input.GetKeyDown(KeyBindings.INCREASE_TRACKED_OBJECT))
         {
             currentDevice++;
             trackerObject.SetDeviceIndex(currentDevice);
@@ -160,10 +170,6 @@ public class MovementInterface : MonoBehaviour
                 stepperSettings.rigidbody.AddForce(transform.forward * amount);
                 stepperSettings.rigidbody.drag = dragAmount;
             }
-        }
-        else
-        {
-            previous_y = tracker.position.y;
         }
     }
 

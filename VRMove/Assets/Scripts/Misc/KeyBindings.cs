@@ -13,4 +13,7 @@ public class KeyBindings : MonoBehaviour
     public static readonly KeyCode START_STEPPER = KeyCode.Z;
     public static readonly KeyCode STEPPER_THRESHOLD_INCREASE = KeyCode.B;
     public static readonly KeyCode STEPPER_THRESHOLD_DECREASE = KeyCode.V;
+    public static readonly KeyCode CHANGE_TO_TETHER = KeyCode.T;
+    public static readonly KeyCode CHANGE_TO_STEPPER = KeyCode.S;
+    public static readonly KeyCode CHANGE_TO_CONTROLLER = KeyCode.C;
 }

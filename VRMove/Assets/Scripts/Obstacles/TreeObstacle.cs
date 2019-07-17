@@ -8,11 +8,14 @@ public class TreeObstacle : Obstacle
     public ParticleSystem fire;
     public ParticleSystem smoke;
 
+    public string soundKey;
+
     protected override void Trigger()
     {
         hasTriggered = true;
         fire.Play();
         smoke.Play();
+        PlaySound(soundKey);
     }
 
     protected override void Update()
@@ -22,5 +25,15 @@ public class TreeObstacle : Obstacle
         {
             gameObject.SetActive(false);
         }
+    }
+
+    void PlaySound(string key)
+    {
+        if (soundKey.Length > 0)
+        {
+            SoundManager.Instance.PlaySound(key);
+            return;
+        }
+        return;
     }
 }

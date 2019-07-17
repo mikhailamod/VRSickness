@@ -57,11 +57,10 @@ public class SoundManager : MonoBehaviour
 
     public bool IsPlaying(string key)
     {
-        /*if (soundEffectsMap.ContainsKey(key))
+        if (soundEffectsMap.ContainsKey(key))
         {
             return soundEffectsMap[key].isPlaying;
         }
-        */
         return false;
     }
 
