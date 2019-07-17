@@ -5,6 +5,7 @@ using UnityEngine;
 public class CartObstacle : Obstacle
 {
     public Animator animator;
+    public string soundKey;
 
     protected override void Start()
     {
@@ -14,7 +15,7 @@ public class CartObstacle : Obstacle
 
     protected override void Trigger()
     {
-        SoundManager.Instance.PlaySound("wagonmove");
+        SoundManager.Instance.PlaySound(soundKey);
         animator.SetBool("MoveCart", true);
     }
 }

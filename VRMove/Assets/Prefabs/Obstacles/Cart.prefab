@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8537374580360053920}
   - component: {fileID: 8537374580362953856}
   - component: {fileID: 8537374580361823808}
+  - component: {fileID: 3051111084857286272}
   m_Layer: 0
   m_Name: Cart
   m_TagString: Untagged
@@ -77,6 +78,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3051111084857286272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8537374580359567488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!1 &8537374580359567490
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +105,7 @@ GameObject:
   - component: {fileID: 8537374580360053922}
   - component: {fileID: 8537374580362953858}
   - component: {fileID: 8537374580361823810}
+  - component: {fileID: 2210073419844306394}
   m_Layer: 0
   m_Name: Cart 1
   m_TagString: Untagged
@@ -154,6 +172,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &2210073419844306394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8537374580359567490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!1 &8537374580359567492
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,6 +199,7 @@ GameObject:
   - component: {fileID: 8537374580360053924}
   - component: {fileID: 8537374580362953860}
   - component: {fileID: 8537374580361823812}
+  - component: {fileID: 5390969819863551353}
   m_Layer: 0
   m_Name: Cart 2
   m_TagString: Untagged
@@ -231,6 +266,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5390969819863551353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8537374580359567492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!1 &8537374580359567494
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +293,7 @@ GameObject:
   - component: {fileID: 8537374580360053926}
   - component: {fileID: 8537374580362953862}
   - component: {fileID: 8537374580361823814}
+  - component: {fileID: 6028761145157979499}
   m_Layer: 0
   m_Name: Cart 3
   m_TagString: Untagged
@@ -308,6 +360,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &6028761145157979499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8537374580359567494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!1 &8537374580359567496
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,10 +447,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   proximity: 8
   input: 101
-  billboard: {fileID: 0}
-  outlines: []
-  textMesh: {fileID: 0}
-  animator: {fileID: 0}
+  billboard: {fileID: 6404544745493505879}
+  outlines:
+  - {fileID: 3051111084857286272}
+  - {fileID: 2210073419844306394}
+  - {fileID: 5390969819863551353}
+  - {fileID: 6028761145157979499}
+  - {fileID: 1359154658890302097}
+  textMesh: {fileID: 6404544744476467501}
+  animator: {fileID: 8537374580485482726}
+  soundKey: wagonMove
 --- !u!1 &8537374580359567498
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +468,7 @@ GameObject:
   - component: {fileID: 8537374580360053930}
   - component: {fileID: 8537374580362953864}
   - component: {fileID: 8537374580361823816}
+  - component: {fileID: 1359154658890302097}
   m_Layer: 0
   m_Name: Cart_2_4
   m_TagString: Untagged
@@ -460,6 +535,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1359154658890302097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8537374580359567498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!1001 &3373258856674131514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -554,9 +645,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 159ee3d2935bd844aa7a025a60553d8a, type: 3}
+--- !u!1 &6404544745493505879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8516793487918389613, guid: 159ee3d2935bd844aa7a025a60553d8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3373258856674131514}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6404544745493505883 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8516793487918389601, guid: 159ee3d2935bd844aa7a025a60553d8a,
     type: 3}
   m_PrefabInstance: {fileID: 3373258856674131514}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6404544744476467501 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8516793488931364631, guid: 159ee3d2935bd844aa7a025a60553d8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3373258856674131514}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

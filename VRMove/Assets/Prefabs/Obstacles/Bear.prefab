@@ -86,6 +86,9 @@ MonoBehaviour:
   textMesh: {fileID: 0}
   animator: {fileID: 7289313036656892879}
   walkingAnimationKey: isStanding
+  idleAnimationKey: 
+  walkingSound: bearStand
+  idleSound: bearMoan
   beginPos: {fileID: 7240907596691550626}
   endPos: {fileID: 7240907596691550626}
   maxDistanceDelta: 0.5
