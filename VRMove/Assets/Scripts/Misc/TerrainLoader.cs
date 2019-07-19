@@ -8,6 +8,11 @@ public class TerrainLoader : MonoBehaviour
     public GameObject deactivate;
     public GameObject activate;
 
+    private void Start()
+    {
+        //Load Render   
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log("Terrain Change detected");

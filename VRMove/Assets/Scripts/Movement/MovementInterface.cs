@@ -35,7 +35,6 @@ public class MovementInterface : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Thresh1"))
         {
-            Debug.Log("Collide");
             tetherSettings.move = true;
             // tetherSettings.speed = tetherSettings.speed_1;
         }
