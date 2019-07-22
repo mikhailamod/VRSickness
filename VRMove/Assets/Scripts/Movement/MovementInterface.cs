@@ -153,20 +153,14 @@ public class MovementInterface : MonoBehaviour
         if(hasStarted)
         {
             physicsTracker.Update(tracker.position, tracker.rotation, Time.smoothDeltaTime);
-            /*
-            float current_y = tracker.position.y;
-            float current_vy = Mathf.Abs(current_y - previous_y) / Time.deltaTime;
-            float accelaration = Mathf.Abs((current_vy - previous_vy) / Time.deltaTime);
-            previous_y = current_y;
-            previous_vy = current_vy;
-            */
-            Debug.Log(Mathf.Abs(physicsTracker.Velocity.y));
-            float amount = Mathf.Abs(stepperSettings.speed  * physicsTracker.Velocity.y);
+            
+            float amount = Mathf.Clamp(Mathf.Abs(stepperSettings.speed  * physicsTracker.Velocity.y), 0, stepperSettings.maxSpeed);
             float dragAmount = Mathf.Abs(stepperSettings.dragScale * (1/physicsTracker.Velocity.y));
             if (amount > stepperSettings.threshold)
             {
                 //playerMovement.Move(amount * Time.smoothDeltaTime);
                 stepperSettings.rigidbody.AddForce(transform.forward * amount);
+                stepperSettings.rigidbody.velocity = new Vector3(0, 0, Mathf.Clamp(stepperSettings.rigidbody.velocity.z, 0, stepperSettings.maxSpeed));
                 stepperSettings.rigidbody.drag = dragAmount;
             }
         }
@@ -188,7 +182,7 @@ public class MovementInterface : MonoBehaviour
 
         if(tetherSettings.move == true)
         {
-            Debug.Log("Calling move");
+            //Debug.Log("Calling move");
             playerMovement.Move( tetherSettings.getSpeed()* Time.deltaTime);
         }
     }
@@ -227,6 +221,7 @@ public class StepperSettings
     public float speed;
     public float dragScale;
     public float threshold =  0.1f;
+    public float maxSpeed = 35f;
     public Rigidbody rigidbody;
 }
 
