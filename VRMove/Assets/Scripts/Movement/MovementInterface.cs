@@ -12,6 +12,7 @@ public class MovementInterface : MonoBehaviour
     [Header("General Settings")]
     public MovementState state;
     public PlayerMovement playerMovement;
+    public DebugUI debugUI;
 
     [Header("Keyboard Settings")]
     public KeyboardSettings keyboardSettings;
@@ -58,6 +59,11 @@ public class MovementInterface : MonoBehaviour
         {
             playerMovement = GetComponent<PlayerMovement>();
         }
+
+        currentDevice = (int)trackerObject.index;
+        debugUI.UpdateHasStartedText("false");
+        debugUI.UpdateControllerType(GetState());
+        debugUI.UpdateTrackerDevice(currentDevice);
     }
 
     public string GetState()
@@ -99,25 +105,30 @@ public class MovementInterface : MonoBehaviour
         if(Input.GetKeyDown(KeyBindings.CHANGE_TO_CONTROLLER))
         {
             state = MovementState.CONTROLLER;
+            debugUI.UpdateControllerType(GetState());
         }
         if (Input.GetKeyDown(KeyBindings.CHANGE_TO_STEPPER))
         {
             state = MovementState.STEPPER;
+            debugUI.UpdateControllerType(GetState());
         }
         if (Input.GetKeyDown(KeyBindings.CHANGE_TO_TETHER))
         {
             state = MovementState.TETHER;
+            debugUI.UpdateControllerType(GetState());
         }
 
         if (Input.GetKeyDown(KeyBindings.INCREASE_TRACKED_OBJECT))
         {
             currentDevice++;
             trackerObject.SetDeviceIndex(currentDevice);
+            debugUI.UpdateTrackerDevice(currentDevice);
         }
         if (Input.GetKeyDown(KeyBindings.DECREASE_TRACKED_OBJECT))
         {
             currentDevice--;
             trackerObject.SetDeviceIndex(currentDevice);
+            debugUI.UpdateTrackerDevice(currentDevice);
         }
 
         if(!hasStarted)
@@ -126,6 +137,7 @@ public class MovementInterface : MonoBehaviour
                (SteamVR_Actions._default.Interact.GetStateDown(SteamVR_Input_Sources.Any)))
             {
                 hasStarted = true;
+                debugUI.UpdateHasStartedText("true");
             }
         } 
     }
@@ -140,38 +152,47 @@ public class MovementInterface : MonoBehaviour
 
     void ManageController()
     {
-        
+        string info = "";
         if(walkAction.GetAxis(SteamVR_Input_Sources.Any) != 0)
         {
             float amount = walkAction.GetAxis(SteamVR_Input_Sources.Any) * controllerSettings.speed;
+            info += "walkAmount: " + amount;
             playerMovement.Move(amount * Time.deltaTime);
         }
+        debugUI.UpdateInfoBox(info);
     }
 
     void ManageStepper()
     {
         if(hasStarted)
         {
+            string info = "";
             physicsTracker.Update(tracker.position, tracker.rotation, Time.smoothDeltaTime);
             
             float amount = Mathf.Abs(stepperSettings.force  * physicsTracker.Velocity.y);
+            info += "Force amount: " + amount + "\n";
+
             float dragAmount = Mathf.Abs(stepperSettings.dragScale * (1/physicsTracker.Velocity.y));
+            info += "Drag amount: " + dragAmount + "\n";
+
             if (amount > stepperSettings.threshold)
             {
                 stepperSettings.rigidbody.AddForce(transform.forward * amount);
                 stepperSettings.rigidbody.velocity = new Vector3(0, 0, Mathf.Clamp(stepperSettings.rigidbody.velocity.z, 0, stepperSettings.maxSpeed));
+                info += "rb velocity: " + stepperSettings.rigidbody.velocity + "\n";
                 stepperSettings.rigidbody.drag = dragAmount;
 
                 //Debug.Log("vel: " + stepperSettings.rigidbody.velocity.z);
             }
+            debugUI.UpdateInfoBox(info);
         }
     }
 
     void ManageTether()
     {
-        
+
         // @TODO Jethro
-        
+        string info = "canMove: false";
         if(Input.GetKey(tetherSettings.movementKeyForward))
         {
         tetherSettings.HMD.transform.position += new Vector3(0, 0, ( keyboardSettings.speed* Time.deltaTime));
@@ -180,10 +201,10 @@ public class MovementInterface : MonoBehaviour
         {
         tetherSettings.HMD.transform.position -= new Vector3(0, 0, ( keyboardSettings.speed* Time.deltaTime));
         }
-
         if(tetherSettings.move == true)
         {
-            //Debug.Log("Calling move");
+            info = "canMove: true\n" +
+                    "tetherSpeed: " + tetherSettings.getSpeed();
             playerMovement.Move( tetherSettings.getSpeed()* Time.deltaTime);
         }
     }
