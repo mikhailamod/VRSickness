@@ -13,6 +13,8 @@ public class MovementInterface : MonoBehaviour
     public MovementState state;
     public PlayerMovement playerMovement;
     public DebugUI debugUI;
+    public string walkType = "walk";
+    public float soundThreshold;
 
     [Header("Keyboard Settings")]
     public KeyboardSettings keyboardSettings;
@@ -37,7 +39,7 @@ public class MovementInterface : MonoBehaviour
         if (other.gameObject.CompareTag("Thresh1"))
         {
             tetherSettings.move = true;
-            // tetherSettings.speed = tetherSettings.speed_1;
+            Debug.Log("Collide = True");
         }
 
     }
@@ -49,6 +51,7 @@ public class MovementInterface : MonoBehaviour
             if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
             {
                 tetherSettings.move = false;
+                Debug.Log("Collide = False");
             }
         }
     }
@@ -158,6 +161,13 @@ public class MovementInterface : MonoBehaviour
             float amount = walkAction.GetAxis(SteamVR_Input_Sources.Any) * controllerSettings.speed;
             info += "walkAmount: " + amount;
             playerMovement.Move(amount * Time.deltaTime);
+            if (SoundManager.Instance != null && !SoundManager.Instance.IsPlaying(walkType))
+            {
+                if (walkAction.GetAxis(SteamVR_Input_Sources.Any) > soundThreshold)
+                {
+                    SoundManager.Instance.PlaySound(walkType);
+                }
+            }
         }
         debugUI.UpdateInfoBox(info);
     }
@@ -207,6 +217,7 @@ public class MovementInterface : MonoBehaviour
                     "tetherSpeed: " + tetherSettings.getSpeed();
             playerMovement.Move( tetherSettings.getSpeed()* Time.deltaTime);
         }
+        debugUI.UpdateInfoBox(info);
     }
 }
 
