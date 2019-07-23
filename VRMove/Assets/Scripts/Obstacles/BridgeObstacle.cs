@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class BridgeObstacle : Obstacle
 {
-    public PlayerMovement playerMovement;
+    public MovementInterface movementInterface;
     //play bridge walk sound
     void OnTriggerEnter(Collider other)
     {
-        playerMovement.SetWalkType("walkWood");
+        movementInterface.SetWalkType("walkWood");
     }
 
     //play normal walk sound
     void OnTriggerExit(Collider other)
     {
-        playerMovement.SetWalkType("walk");
+        movementInterface.SetWalkType("walk");
     }
 
     protected override void Trigger()

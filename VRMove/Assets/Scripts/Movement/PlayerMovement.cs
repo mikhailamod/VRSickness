@@ -11,7 +11,6 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position += new Vector3(0, 0, delta);
 
-        
     }
 
     public void SetWalkType(string walkType)

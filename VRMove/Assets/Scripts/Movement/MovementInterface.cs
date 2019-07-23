@@ -160,14 +160,10 @@ public class MovementInterface : MonoBehaviour
         {
             float amount = walkAction.GetAxis(SteamVR_Input_Sources.Any) * controllerSettings.speed;
             info += "walkAmount: " + amount;
+
+            PlayWalkSound(walkAction.GetAxis(SteamVR_Input_Sources.Any));
             playerMovement.Move(amount * Time.deltaTime);
-            if (SoundManager.Instance != null && !SoundManager.Instance.IsPlaying(walkType))
-            {
-                if (walkAction.GetAxis(SteamVR_Input_Sources.Any) > soundThreshold)
-                {
-                    SoundManager.Instance.PlaySound(walkType);
-                }
-            }
+            
         }
         debugUI.UpdateInfoBox(info);
     }
@@ -191,6 +187,7 @@ public class MovementInterface : MonoBehaviour
                 stepperSettings.rigidbody.velocity = new Vector3(0, 0, Mathf.Clamp(stepperSettings.rigidbody.velocity.z, 0, stepperSettings.maxSpeed));
                 info += "rb velocity: " + stepperSettings.rigidbody.velocity + "\n";
                 stepperSettings.rigidbody.drag = dragAmount;
+                PlayWalkSound(stepperSettings.rigidbody.velocity.z);
 
                 //Debug.Log("vel: " + stepperSettings.rigidbody.velocity.z);
             }
@@ -216,8 +213,25 @@ public class MovementInterface : MonoBehaviour
             info = "canMove: true\n" +
                     "tetherSpeed: " + tetherSettings.getSpeed();
             playerMovement.Move( tetherSettings.getSpeed()* Time.deltaTime);
+            PlayWalkSound(tetherSettings.getSpeed());
         }
         debugUI.UpdateInfoBox(info);
+    }
+
+    public void SetWalkType(string walkType)
+    {
+        this.walkType = walkType;
+    }
+
+    void PlayWalkSound(float delta)
+    {
+        if (SoundManager.Instance != null && !SoundManager.Instance.IsPlaying(walkType))
+        {
+            if (delta > soundThreshold)
+            {
+                SoundManager.Instance.PlaySound(walkType);
+            }
+        }
     }
 }
 
