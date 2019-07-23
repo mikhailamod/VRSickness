@@ -28,7 +28,7 @@ public class DebugUI : MonoBehaviour
         {
             movementInterface.stepperSettings.threshold -= 0.1f;
         }
-        speedText.text = "Speed Factor: " + movementInterface.stepperSettings.speed;
+        speedText.text = "Speed Factor: " + movementInterface.stepperSettings.force;
         scaleText.text = "Scaling Factor: " + movementInterface.stepperSettings.dragScale +
                          "\nCurrent Device: " + movementInterface.currentDevice +
                          "\nThreshold: " + movementInterface.stepperSettings.threshold;
