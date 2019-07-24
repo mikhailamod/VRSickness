@@ -58,15 +58,31 @@ public class MovementInterface : MonoBehaviour
 
     void Start()
     {
+        InitializeValues();
+
         if(!playerMovement)
         {
             playerMovement = GetComponent<PlayerMovement>();
         }
 
-        currentDevice = (int)trackerObject.index;
         debugUI.UpdateHasStartedText("false");
         debugUI.UpdateControllerType(GetState());
         debugUI.UpdateTrackerDevice(currentDevice);
+    }
+
+    public void InitializeValues()
+    {
+        state = GameController.Instance.state;
+
+        currentDevice = GameController.Instance.DeviceNumber;
+        trackerObject.SetDeviceIndex(currentDevice);
+
+        stepperSettings.force = GameController.Instance.StepperForce;
+        stepperSettings.dragScale = GameController.Instance.StepperDragAmount;
+        stepperSettings.maxSpeed = GameController.Instance.StepperMaxSpeed;
+        stepperSettings.threshold = GameController.Instance.StepperThreshold;
+
+        controllerSettings.speed = GameController.Instance.ControllerSpeed;
     }
 
     public string GetState()
@@ -292,19 +308,15 @@ public class TetherSettings
 
 
     public GameObject threshold_1;
-    public GameObject threshold_2;
-    public GameObject threshold_3;
-
-
-    public float speed_1;
-    public float speed_2;
-    public float speed_3;
 
     public float speed = 1;
     public float getSpeed(){
-        if (!move) return 0; 
+
+        if (!move) { return 0; }
+
         float distance = HMD.transform.position.z-threshold_1.transform.position.z;
-        if (distance<0) throw new System.Exception("Distance shouldn't be negative");
+
+        if (distance < 0) { return 0; }
         return (float)(1+distance*3.25);
         // return 2+1/(1+Mathf.Exp(distance));
     }
