@@ -12,6 +12,9 @@ public class MovementInterface : MonoBehaviour
     [Header("General Settings")]
     public MovementState state;
     public PlayerMovement playerMovement;
+    public DebugUI debugUI;
+    public string walkType = "walk";
+    public float soundThreshold;
 
     [Header("Keyboard Settings")]
     public KeyboardSettings keyboardSettings;
@@ -36,7 +39,7 @@ public class MovementInterface : MonoBehaviour
         if (other.gameObject.CompareTag("Thresh1"))
         {
             tetherSettings.move = true;
-            // tetherSettings.speed = tetherSettings.speed_1;
+            Debug.Log("Collide = True");
         }
 
     }
@@ -48,16 +51,38 @@ public class MovementInterface : MonoBehaviour
             if (tetherSettings.HMD.transform.position.z < other.transform.position.z)
             {
                 tetherSettings.move = false;
+                Debug.Log("Collide = False");
             }
         }
     }
 
     void Start()
     {
+        InitializeValues();
+
         if(!playerMovement)
         {
             playerMovement = GetComponent<PlayerMovement>();
         }
+
+        debugUI.UpdateHasStartedText("false");
+        debugUI.UpdateControllerType(GetState());
+        debugUI.UpdateTrackerDevice(currentDevice);
+    }
+
+    public void InitializeValues()
+    {
+        state = GameController.Instance.state;
+
+        currentDevice = GameController.Instance.DeviceNumber;
+        trackerObject.SetDeviceIndex(currentDevice);
+
+        stepperSettings.force = GameController.Instance.StepperForce;
+        stepperSettings.dragScale = GameController.Instance.StepperDragAmount;
+        stepperSettings.maxSpeed = GameController.Instance.StepperMaxSpeed;
+        stepperSettings.threshold = GameController.Instance.StepperThreshold;
+
+        controllerSettings.speed = GameController.Instance.ControllerSpeed;
     }
 
     public string GetState()
@@ -99,25 +124,30 @@ public class MovementInterface : MonoBehaviour
         if(Input.GetKeyDown(KeyBindings.CHANGE_TO_CONTROLLER))
         {
             state = MovementState.CONTROLLER;
+            debugUI.UpdateControllerType(GetState());
         }
         if (Input.GetKeyDown(KeyBindings.CHANGE_TO_STEPPER))
         {
             state = MovementState.STEPPER;
+            debugUI.UpdateControllerType(GetState());
         }
         if (Input.GetKeyDown(KeyBindings.CHANGE_TO_TETHER))
         {
             state = MovementState.TETHER;
+            debugUI.UpdateControllerType(GetState());
         }
 
         if (Input.GetKeyDown(KeyBindings.INCREASE_TRACKED_OBJECT))
         {
             currentDevice++;
             trackerObject.SetDeviceIndex(currentDevice);
+            debugUI.UpdateTrackerDevice(currentDevice);
         }
         if (Input.GetKeyDown(KeyBindings.DECREASE_TRACKED_OBJECT))
         {
             currentDevice--;
             trackerObject.SetDeviceIndex(currentDevice);
+            debugUI.UpdateTrackerDevice(currentDevice);
         }
 
         if(!hasStarted)
@@ -126,6 +156,7 @@ public class MovementInterface : MonoBehaviour
                (SteamVR_Actions._default.Interact.GetStateDown(SteamVR_Input_Sources.Any)))
             {
                 hasStarted = true;
+                debugUI.UpdateHasStartedText("true");
             }
         } 
     }
@@ -140,43 +171,51 @@ public class MovementInterface : MonoBehaviour
 
     void ManageController()
     {
-        
+        string info = "";
         if(walkAction.GetAxis(SteamVR_Input_Sources.Any) != 0)
         {
             float amount = walkAction.GetAxis(SteamVR_Input_Sources.Any) * controllerSettings.speed;
+            info += "walkAmount: " + amount;
+
+            PlayWalkSound(walkAction.GetAxis(SteamVR_Input_Sources.Any));
             playerMovement.Move(amount * Time.deltaTime);
+            
         }
+        debugUI.UpdateInfoBox(info);
     }
 
     void ManageStepper()
     {
         if(hasStarted)
         {
+            string info = "";
             physicsTracker.Update(tracker.position, tracker.rotation, Time.smoothDeltaTime);
-            /*
-            float current_y = tracker.position.y;
-            float current_vy = Mathf.Abs(current_y - previous_y) / Time.deltaTime;
-            float accelaration = Mathf.Abs((current_vy - previous_vy) / Time.deltaTime);
-            previous_y = current_y;
-            previous_vy = current_vy;
-            */
-            Debug.Log(Mathf.Abs(physicsTracker.Velocity.y));
-            float amount = Mathf.Abs(stepperSettings.speed  * physicsTracker.Velocity.y);
+            
+            float amount = Mathf.Abs(stepperSettings.force  * physicsTracker.Velocity.y);
+            info += "Force amount: " + amount + "\n";
+
             float dragAmount = Mathf.Abs(stepperSettings.dragScale * (1/physicsTracker.Velocity.y));
+            info += "Drag amount: " + dragAmount + "\n";
+
             if (amount > stepperSettings.threshold)
             {
-                //playerMovement.Move(amount * Time.smoothDeltaTime);
                 stepperSettings.rigidbody.AddForce(transform.forward * amount);
+                stepperSettings.rigidbody.velocity = new Vector3(0, 0, Mathf.Clamp(stepperSettings.rigidbody.velocity.z, 0, stepperSettings.maxSpeed));
+                info += "rb velocity: " + stepperSettings.rigidbody.velocity + "\n";
                 stepperSettings.rigidbody.drag = dragAmount;
+                PlayWalkSound(stepperSettings.rigidbody.velocity.z);
+
+                //Debug.Log("vel: " + stepperSettings.rigidbody.velocity.z);
             }
+            debugUI.UpdateInfoBox(info);
         }
     }
 
     void ManageTether()
     {
-        
+
         // @TODO Jethro
-        
+        string info = "canMove: false";
         if(Input.GetKey(tetherSettings.movementKeyForward))
         {
         tetherSettings.HMD.transform.position += new Vector3(0, 0, ( keyboardSettings.speed* Time.deltaTime));
@@ -185,11 +224,29 @@ public class MovementInterface : MonoBehaviour
         {
         tetherSettings.HMD.transform.position -= new Vector3(0, 0, ( keyboardSettings.speed* Time.deltaTime));
         }
-
         if(tetherSettings.move == true)
         {
-            Debug.Log("Calling move");
+            info = "canMove: true\n" +
+                    "tetherSpeed: " + tetherSettings.getSpeed();
             playerMovement.Move( tetherSettings.getSpeed()* Time.deltaTime);
+            PlayWalkSound(tetherSettings.getSpeed());
+        }
+        debugUI.UpdateInfoBox(info);
+    }
+
+    public void SetWalkType(string walkType)
+    {
+        this.walkType = walkType;
+    }
+
+    void PlayWalkSound(float delta)
+    {
+        if (SoundManager.Instance != null && !SoundManager.Instance.IsPlaying(walkType))
+        {
+            if (delta > soundThreshold)
+            {
+                SoundManager.Instance.PlaySound(walkType);
+            }
         }
     }
 }
@@ -224,10 +281,13 @@ public class ControllerSettings
 [System.Serializable]
 public class StepperSettings
 {
-    public float speed;
+    public float force;
     public float dragScale;
     public float threshold =  0.1f;
+    public float maxSpeed = 35f;
     public Rigidbody rigidbody;
+
+    public float prev_velocity = 0f;
 }
 
 [System.Serializable]
@@ -248,19 +308,15 @@ public class TetherSettings
 
 
     public GameObject threshold_1;
-    public GameObject threshold_2;
-    public GameObject threshold_3;
-
-
-    public float speed_1;
-    public float speed_2;
-    public float speed_3;
 
     public float speed = 1;
     public float getSpeed(){
-        if (!move) return 0; 
+
+        if (!move) { return 0; }
+
         float distance = HMD.transform.position.z-threshold_1.transform.position.z;
-        if (distance<0) throw new System.Exception("Distance shouldn't be negative");
+
+        if (distance < 0) { return 0; }
         return (float)(1+distance*3.25);
         // return 2+1/(1+Mathf.Exp(distance));
     }

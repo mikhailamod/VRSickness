@@ -16,6 +16,8 @@ public class Hand : MonoBehaviour
     public Interactable currentInteractable = null;
     public List<Interactable> interactables = new List<Interactable>();
 
+    bool hasSomething = false;
+
     void Awake()
     {
         pose = GetComponent<SteamVR_Behaviour_Pose>();
@@ -25,17 +27,18 @@ public class Hand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (grabAction.GetStateDown(pose.inputSource))
+        if (!hasSomething && grabAction.GetStateDown(pose.inputSource))
         {
             Debug.Log(pose.inputSource + " Trigger Down");
             Pickup();
         }
-
-        if (grabAction.GetStateUp(pose.inputSource))
+        /*
+        else if (hasSomething && grabAction.GetStateDown(pose.inputSource))
         {
             Debug.Log(pose.inputSource + " Trigger Up.");
             Drop();
         }
+        */
     }
 
     private void OnTriggerEnter(Collider other)
@@ -69,6 +72,7 @@ public class Hand : MonoBehaviour
         Rigidbody targetBody = currentInteractable.GetComponent<Rigidbody>();
         fixedJoint.connectedBody = targetBody;
         currentInteractable.activeHand = this;
+        hasSomething = true;
 
     }
 
@@ -85,6 +89,7 @@ public class Hand : MonoBehaviour
         fixedJoint.connectedBody = null;
         currentInteractable.activeHand = null;
         currentInteractable = null;
+        hasSomething = false;
     }
 
     Interactable GetNearestInteractable()
