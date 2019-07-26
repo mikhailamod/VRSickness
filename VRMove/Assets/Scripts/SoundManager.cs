@@ -40,7 +40,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(string key)
     {
-        if(soundEffectsMap.ContainsKey(key))
+        if(soundEffectsMap.ContainsKey(key) && soundEffectsMap[key] != null)
         {
             soundEffectsMap[key].Play();
         }
@@ -49,7 +49,7 @@ public class SoundManager : MonoBehaviour
 
     public void StopSound(string key)
     {
-        if (soundEffectsMap.ContainsKey(key))
+        if (soundEffectsMap.ContainsKey(key) && soundEffectsMap[key] != null)
         {
             soundEffectsMap[key].Stop();
         }
@@ -57,7 +57,7 @@ public class SoundManager : MonoBehaviour
 
     public bool IsPlaying(string key)
     {
-        if (soundEffectsMap.ContainsKey(key))
+        if (soundEffectsMap.ContainsKey(key) && soundEffectsMap[key] != null)
         {
             return soundEffectsMap[key].isPlaying;
         }
