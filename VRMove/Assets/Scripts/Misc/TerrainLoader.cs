@@ -5,6 +5,8 @@ using UnityEngine;
 public class TerrainLoader : MonoBehaviour
 {
 
+    public static int iterations = 5;
+
     public GameObject deactivate;
     public GameObject activate;
 
@@ -36,39 +38,56 @@ public class TerrainLoader : MonoBehaviour
 
     IEnumerator GetActiveRenderers()
     {
-        //For Activate
-        foreach(Transform t in activate.transform)
+        if (activate != null)
         {
-            activeRenderers.AddRange(t.GetComponentsInChildren<MeshRenderer>(true));
-            yield return null;
+            foreach (Transform t in activate.transform)
+            {
+                activeRenderers.AddRange(t.GetComponentsInChildren<MeshRenderer>(true));
+                yield return null;
+            }
         }
     }
 
     IEnumerator GetDeactiveRenderers()
     {
-        //For Deactivate
-        foreach (Transform t in deactivate.transform)
+        if(deactivate != null)
         {
-            deactiveRenderers.AddRange(t.GetComponentsInChildren<MeshRenderer>(true));
-            yield return null;
+            foreach (Transform t in deactivate.transform)
+            {
+                deactiveRenderers.AddRange(t.GetComponentsInChildren<MeshRenderer>(true));
+                yield return null;
+            }
         }
     }
 
     IEnumerator DeactivateRenderers()
     {
+        int count = 0;
         foreach(MeshRenderer r in deactiveRenderers)
         {
             r.enabled = false;
-            yield return null;
+            count++;
+            if(count == iterations)
+            {
+                count = 0;
+                yield return null;
+            }
+            
         }
     }
 
     IEnumerator ActivateRenderers()
     {
+        int count = 0;
         foreach (MeshRenderer r in activeRenderers)
         {
             r.enabled = true;
-            yield return null;
+            count++;
+            if (count == iterations)
+            {
+                count = 0;
+                yield return null;
+            }
         }
     }
 }

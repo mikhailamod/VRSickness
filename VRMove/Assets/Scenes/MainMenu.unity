@@ -5965,7 +5965,7 @@ GameObject:
   - component: {fileID: 466061814}
   - component: {fileID: 466061813}
   m_Layer: 5
-  m_Name: KeyboardButton
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5978,18 +5978,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466061811}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1445522415}
-  m_Father: {fileID: 1536085450}
-  m_RootOrder: 3
+  m_Father: {fileID: 1518707061}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -72}
-  m_SizeDelta: {x: 223.31, y: 30}
+  m_SizeDelta: {x: 118.15, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &466061813
 MonoBehaviour:
@@ -8345,10 +8345,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 423961774}
     m_Modifications:
-    - target: {fileID: 526568902991181130, guid: d1e9a51a17c69844c8d304150238c147,
+    - target: {fileID: 3958409314500797842, guid: d1e9a51a17c69844c8d304150238c147,
         type: 3}
-      propertyPath: m_Name
-      value: Gate
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958409315530548200, guid: d1e9a51a17c69844c8d304150238c147,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958409315530548200, guid: d1e9a51a17c69844c8d304150238c147,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958409315530548200, guid: d1e9a51a17c69844c8d304150238c147,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958409315530548200, guid: d1e9a51a17c69844c8d304150238c147,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958409315530548200, guid: d1e9a51a17c69844c8d304150238c147,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 526568902990883178, guid: d1e9a51a17c69844c8d304150238c147,
         type: 3}
@@ -8405,30 +8430,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3958409315530548200, guid: d1e9a51a17c69844c8d304150238c147,
+    - target: {fileID: 526568902991181130, guid: d1e9a51a17c69844c8d304150238c147,
         type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3958409315530548200, guid: d1e9a51a17c69844c8d304150238c147,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3958409315530548200, guid: d1e9a51a17c69844c8d304150238c147,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3958409315530548200, guid: d1e9a51a17c69844c8d304150238c147,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3958409315530548200, guid: d1e9a51a17c69844c8d304150238c147,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
+      propertyPath: m_Name
+      value: Gate
       objectReference: {fileID: 0}
     - target: {fileID: 526568902991279074, guid: d1e9a51a17c69844c8d304150238c147,
         type: 3}
@@ -8469,11 +8474,6 @@ PrefabInstance:
         type: 3}
       propertyPath: soundKey
       value: gateOpening
-      objectReference: {fileID: 0}
-    - target: {fileID: 3958409314500797842, guid: d1e9a51a17c69844c8d304150238c147,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7006155367695772268, guid: d1e9a51a17c69844c8d304150238c147, type: 3}
@@ -19668,7 +19668,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Keyboard (Debug)
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -19737,10 +19737,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1445522416}
-    characterCount: 16
+    characterCount: 4
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -21000,6 +21000,7 @@ RectTransform:
   m_Children:
   - {fileID: 1476802135}
   - {fileID: 285658414}
+  - {fileID: 466061812}
   m_Father: {fileID: 913879578}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21118,7 +21119,6 @@ RectTransform:
   - {fileID: 2033181263}
   - {fileID: 1576264833}
   - {fileID: 543573462}
-  - {fileID: 466061812}
   m_Father: {fileID: 913879578}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
