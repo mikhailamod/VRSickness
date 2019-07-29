@@ -16,8 +16,8 @@ public class TerrainLoader : MonoBehaviour
     private void Start()
     {
         //Load Render
-        StartCoroutine(GetActiveRenderers());
-        StartCoroutine(GetDeactiveRenderers());
+        GetActiveRenderers();
+        GetDeactiveRenderers();
     }
 
     public void OnTriggerEnter(Collider other)
@@ -26,68 +26,52 @@ public class TerrainLoader : MonoBehaviour
         if(deactivate)
         {
             Debug.Log("Deactivating..." + deactivate.name);
-            StartCoroutine(DeactivateRenderers());
+            DeactivateRenderers();
         }
 
         if (activate)
         {
             Debug.Log("Activating..." + activate.name);
-            StartCoroutine(ActivateRenderers());
+            ActivateRenderers();
         }
     }
 
-    IEnumerator GetActiveRenderers()
+    void GetActiveRenderers()
     {
         if (activate != null)
         {
             foreach (Transform t in activate.transform)
             {
                 activeRenderers.AddRange(t.GetComponentsInChildren<MeshRenderer>(true));
-                yield return null;
             }
         }
     }
 
-    IEnumerator GetDeactiveRenderers()
+    void GetDeactiveRenderers()
     {
         if(deactivate != null)
         {
             foreach (Transform t in deactivate.transform)
             {
                 deactiveRenderers.AddRange(t.GetComponentsInChildren<MeshRenderer>(true));
-                yield return null;
             }
         }
     }
 
-    IEnumerator DeactivateRenderers()
+    void DeactivateRenderers()
     {
-        int count = 0;
         foreach(MeshRenderer r in deactiveRenderers)
         {
             r.enabled = false;
-            count++;
-            if(count == iterations)
-            {
-                count = 0;
-                yield return null;
-            }
             
         }
     }
 
-    IEnumerator ActivateRenderers()
+    void ActivateRenderers()
     {
-        int count = 0;
         foreach (MeshRenderer r in activeRenderers)
         {
             r.enabled = true;
-            count++;
-            if (count == iterations)
-            {
-                count = 0;
-                yield return null;
-            }
         }
     }
 }
