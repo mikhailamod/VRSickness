@@ -10,9 +10,23 @@ public class TreeObstacle : Obstacle
 
     public string soundKey;
 
+    MeshRenderer mesh;
+
+    protected override void Start()
+    {
+        base.Start();
+        mesh = GetComponent<MeshRenderer>();
+    }
+
     protected override void Trigger()
     {
         hasTriggered = true;
+
+        if(mesh != null)
+        {
+            mesh.enabled = false;
+        }
+
         fire.Play();
         smoke.Play();
         PlaySound(soundKey);
