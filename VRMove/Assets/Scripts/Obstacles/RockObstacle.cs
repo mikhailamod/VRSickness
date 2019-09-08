@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// A rock that explodes
+/// </summary>
 public class RockObstacle : Obstacle
 {
 

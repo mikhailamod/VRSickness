@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// A tree which catches fire (particles) and then disappears
+/// </summary>
 public class TreeObstacle : Obstacle
 {
 

@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class activates or deactivates a group of MeshRenders
+/// This is required to reduce GPU load
+/// </summary>
 public class TerrainLoader : MonoBehaviour
 {
 

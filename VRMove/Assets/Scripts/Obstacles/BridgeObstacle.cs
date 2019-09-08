@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A static obstacle (no triggers) but does change sound of footsteps
+/// </summary>
 public class BridgeObstacle : Obstacle
 {
     public MovementInterface movementInterface;

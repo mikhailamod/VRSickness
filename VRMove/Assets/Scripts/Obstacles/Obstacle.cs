@@ -5,17 +5,20 @@ using Valve.VR;
 using TMPro;
 using cakeslice;
 
+/// <summary>
+/// The base class for all obstacles. Has a trigger method which contains implementation for obstacle
+/// </summary>
 public abstract class Obstacle : MonoBehaviour
 {
 
-    public float proximity;
+    public float proximity;//how close player must be to trigger
     public KeyCode input;
     public GameObject billboard;
 
     protected Transform player;
     protected MovementInterface movementInterface;
 
-    public List<Outline> outlines;
+    public List<Outline> outlines;//List of outlines for OutlineEffect
 
     public TextMeshProUGUI textMesh;
 
@@ -78,6 +81,7 @@ public abstract class Obstacle : MonoBehaviour
         }
     }
 
+    //An obstacle will call trigger when player is within proximity. 
     protected abstract void Trigger();
 
     void EnableOutlines()

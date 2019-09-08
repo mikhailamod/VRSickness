@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Inherits from Obstacle, used for obstacles that are animals (objects with a variety of sounds and movements)
+/// </summary>
 public class AnimalObstacle : Obstacle
 {
 

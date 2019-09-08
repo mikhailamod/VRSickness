@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+/// <summary>
+/// This Singleton class controls the state of the environment and initial values.
+/// </summary>
 public class GameController : MonoBehaviour
 {
     public static GameController _instance;

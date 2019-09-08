@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This Singleton is responsible for all sound effects within the environment
+/// </summary>
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager _instance;

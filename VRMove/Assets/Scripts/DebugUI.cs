@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
+/// <summary>
+/// UI used for debug purposes
+/// </summary>
 public class DebugUI : MonoBehaviour
 {
 

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls state of the Menu
+/// </summary>
 public class MenuController : MonoBehaviour
 {
 

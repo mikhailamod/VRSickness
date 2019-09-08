@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Basic moving cart obstacle
+/// </summary>
 public class CartObstacle : Obstacle
 {
     public Animator animator;

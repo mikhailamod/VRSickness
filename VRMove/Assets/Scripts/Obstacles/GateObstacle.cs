@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Basic gate that opens
+/// </summary>
 public class GateObstacle : Obstacle
 {
 

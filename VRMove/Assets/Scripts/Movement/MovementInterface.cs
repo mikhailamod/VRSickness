@@ -5,7 +5,9 @@ using Valve.VR;
 using TMPro;
 using Unity.Labs.SuperScience;
 
-//temp edit
+/// <summary>
+/// This script is is responsible for moving the player with the appriopriate method.
+/// </summary>
 [RequireComponent(typeof(PlayerMovement))]
 public class MovementInterface : MonoBehaviour
 {
@@ -70,6 +72,7 @@ public class MovementInterface : MonoBehaviour
         debugUI.UpdateTrackerDevice(currentDevice);
     }
 
+    //to be called when changing scenes from Main Menu to Game
     public void InitializeValues()
     {
         state = GameController.Instance.state;
@@ -161,6 +164,7 @@ public class MovementInterface : MonoBehaviour
         } 
     }
 
+    //movement with keyboard (for debug purposes)
     void ManageKeyboard()
     {
         if(Input.GetKey(keyboardSettings.movementKey))
@@ -169,6 +173,7 @@ public class MovementInterface : MonoBehaviour
         }
     }
 
+    //movement with Controller
     void ManageController()
     {
         string info = "";
@@ -184,6 +189,7 @@ public class MovementInterface : MonoBehaviour
         debugUI.UpdateInfoBox(info);
     }
 
+    //movement with Stepper
     void ManageStepper()
     {
         if(hasStarted)
@@ -211,6 +217,7 @@ public class MovementInterface : MonoBehaviour
         }
     }
 
+    //movement with Tether
     void ManageTether()
     {
 

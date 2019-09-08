@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 
+/// <summary>
+/// This class represents the players hand. Uses a SteamVR action and Pose to grab Interactables.
+/// </summary>
 [RequireComponent(typeof(FixedJoint))]
 [RequireComponent(typeof(SteamVR_Behaviour_Pose))]
 public class Hand : MonoBehaviour
